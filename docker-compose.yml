@@ -6,17 +6,19 @@ volumes:
 services:
   invoicer-apache:
     build: .docker/apache
+    image: invoicer-apache
     container_name: invoicer-apache
     ports:
       - 8000:80
     volumes:
-      - .docker/config/vhosts:/etc/apache2/sites-enabled
-      - .:/home/wwwroot/sf4
+      - .docker/apache/vhosts:/etc/apache2/sites-enabled
+      - .:/home/www/invoicer
     depends_on:
       - invoicer-php
 
   invoicer-mysql:
     build: .docker/mysql
+    image: invoicer-mysql
     container_name: invoicer-mysql
     volumes:
       - ./.docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
@@ -24,15 +26,16 @@ services:
     ports:
       - 3308:3306
     env_file:
-      - ./.docker/mysql/.env
+      - ./.docker/mysql/.env.local
 
   invoicer-php:
     build: .docker/php
+    image: invoicer-php
     container_name: invoicer-php
     volumes:
-      - .:/home/wwwroot/sf4
+      - .:/home/www/invoicer
     environment:
-      - maildev_host=sf4_maildev
+      - maildev_host=invoicer-maildev
     depends_on:
       - invoicer-maildev
       - invoicer-mysql
