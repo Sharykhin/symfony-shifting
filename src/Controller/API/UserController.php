@@ -36,13 +36,15 @@ class UserController extends AbstractController
      * @Route("/users", name="post_user", methods={"POST"})
      *
      * @param Request $request
+     * @param UserCreateInterface $userCreate
      * @return JsonResponse
      */
     public function store(
         Request $request,
         UserCreateInterface $userCreate
-    )
+    ) : JsonResponse
     {
-        return $this->json([], JsonResponse::HTTP_CREATED);
+        $user = $userCreate->create($request->request->all());
+        return $this->json($user, JsonResponse::HTTP_CREATED);
     }
 }
