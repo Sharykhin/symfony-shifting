@@ -33,7 +33,7 @@ services:
     image: invoicer-php
     container_name: invoicer-php
     volumes:
-      - .:/home/www/invoicer
+      - .:/home/www/invoicer:cached
     environment:
       - maildev_host=invoicer-maildev
     depends_on:

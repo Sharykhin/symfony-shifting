@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class UserController
+ * @package App\Controller\API
+ */
 class UserController extends AbstractController
 {
     /**
@@ -39,7 +43,6 @@ class UserController extends AbstractController
         UserCreateInterface $userCreate
     )
     {
-        var_dump($request->getContent());
         return $this->json([], JsonResponse::HTTP_CREATED);
     }
 }
