@@ -3,7 +3,6 @@
 namespace App\Contract\User;
 
 use App\Entity\User;
-use App\Request\User\UserCreateRequest;
 
 /**
  * Interface UserCreateInterface
@@ -12,8 +11,8 @@ use App\Request\User\UserCreateRequest;
 interface UserCreateInterface
 {
     /**
-     * @param UserCreateRequest $request
+     * @param array $data
      * @return User
      */
-    public function create(UserCreateRequest $request) : User;
+    public function create(array $data) : User;
 }

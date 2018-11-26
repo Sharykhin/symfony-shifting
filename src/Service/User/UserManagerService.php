@@ -5,7 +5,6 @@ namespace App\Service\User;
 use App\Contract\User\UserCreateInterface;
 use App\Contract\User\UserRetrieverInterface;
 use App\Factory\UserFactory;
-use App\Request\User\UserCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 
@@ -49,16 +48,16 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
     }
 
     /**
-     * @param UserCreateRequest $request
+     * @param array $data
      * @return User
      */
-    public function create(UserCreateRequest $request) : User
+    public function create(array $data) : User
     {
         /** @var User $user */
         $user = $this->userFactory->create();
-        $user->setEmail($request->email);
-        $user->setFirstName($request->firstName);
-        $user->setLastName($request->lastName);
+        $user->setEmail($data['email']);
+        $user->setFirstName($data['first_name']);
+        $user->setLastName($data['last_name']);
 
         $this->em->persist($user);
         $this->em->flush();
