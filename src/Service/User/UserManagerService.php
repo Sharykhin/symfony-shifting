@@ -49,7 +49,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
      */
     public function findById(int $userId): ?User
     {
-        return $this->userRepository->find($userId);
+        return $this->em->getRepository(User::class)->find($userId);
     }
 
     /**
