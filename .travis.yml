@@ -14,6 +14,9 @@ script:
   - echo "script"
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_95927b30ba93_key -iv $encrypted_95927b30ba93_iv -in id_rsa_travis.enc -out ${PRIVATE_KEY} -d
+  - ls -la
 deploy:
   provider: script
-  script: ssh chapal@178.172.173.6 -i ${PRIVATE_KEY} 'bash -s' < deploy.sh
+  script:
+  #- ssh chapal@178.172.173.6 -i ${PRIVATE_KEY} 'bash -s' < deploy.sh
+  - ls -la
