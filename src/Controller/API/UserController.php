@@ -28,8 +28,9 @@ class UserController extends AbstractController
      * @Route("/users/{userId}", name="get_user", methods={"GET"}, requirements={"userId"="\d+"})
      *
      * @param UserRetrieverInterface $userRetriever
+     * @param SerializerInterface $serializer
      * @param int $userId
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function show(
         UserRetrieverInterface $userRetriever,
