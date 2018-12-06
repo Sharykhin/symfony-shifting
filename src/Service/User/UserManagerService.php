@@ -2,9 +2,12 @@
 
 namespace App\Service\User;
 
-use App\Contract\User\UserCreateInterface;
+use App\Contract\Factory\ReportFactoryInterface;
+use App\Contract\Factory\UserFactoryInterface;
 use App\Contract\User\UserRetrieverInterface;
-use App\Factory\UserFactory;
+use App\Contract\User\UserCreateInterface;
+use App\Entity\Report;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 
@@ -17,25 +20,27 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
     /** @var EntityManagerInterface $em */
     protected $em;
 
-    /** @var \Doctrine\Common\Persistence\ObjectRepository $userRepository */
-    protected $userRepository;
-
-    /** @var UserFactory $userFactory */
+    /** @var UserFactoryInterface $userFactory */
     protected $userFactory;
+
+    /** @var ReportFactoryInterface $reportFactory */
+    protected $reportFactory;
 
     /**
      * UserManagerService constructor.
      * @param EntityManagerInterface $em
-     * @param UserFactory $userFactory
+     * @param UserFactoryInterface $userFactory
+     * @param ReportFactoryInterface $reportFactory
      */
     public function __construct(
         EntityManagerInterface $em,
-        UserFactory $userFactory
+        UserFactoryInterface $userFactory,
+        ReportFactoryInterface $reportFactory
     )
     {
         $this->em = $em;
-        $this->userRepository = $em->getRepository(User::class);
         $this->userFactory = $userFactory;
+        $this->reportFactory = $reportFactory;
     }
 
     /**
@@ -44,12 +49,13 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
      */
     public function findById(int $userId): ?User
     {
-        return $this->userRepository->find($userId);
+        return $this->em->getRepository(User::class)->find($userId);
     }
 
     /**
      * @param array $data
      * @return User
+     * @throws \Exception
      */
     public function create(array $data) : User
     {
@@ -57,9 +63,16 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $user = $this->userFactory->create();
         $user->setEmail($data['email']);
         $user->setFirstName($data['first_name']);
-        $user->setLastName($data['last_name']);
+        $user->setLastName($data['last_name'] ?? null);
 
         $this->em->persist($user);
+        /** @var Report $report */
+        $report = $this->reportFactory->create();
+        $report->setUser($user);
+        $report->setAmount(0.00);
+        $report->setDate(new DateTime('now'));
+        $this->em->persist($report);
+
         $this->em->flush();
 
         return $user;
