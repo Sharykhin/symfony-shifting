@@ -1,0 +1,11 @@
+language: php
+php:
+  - 7.1.9
+before_install:
+  - echo "before install"
+install:
+  - echo "install"
+before_script:
+  - echo "before script"
+script:
+  - echo "script"
