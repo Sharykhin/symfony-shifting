@@ -11,3 +11,5 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+id_rsa_travis
+id_rsa_travis.pub
