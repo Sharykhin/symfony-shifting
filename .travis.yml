@@ -17,6 +17,7 @@ before_deploy:
   - ls -la
 deploy:
   provider: script
-  script:
+  script: ls -la
   #- ssh chapal@178.172.173.6 -i ${PRIVATE_KEY} 'bash -s' < deploy.sh
-  - ls -la
+  on:
+    branch: master
