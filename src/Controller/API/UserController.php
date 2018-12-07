@@ -46,7 +46,6 @@ class UserController extends AbstractController
         $normalizer = new ObjectNormalizer($classMetadataFactory, new CamelCaseToSnakeCaseNameConverter());
         $serializer = new Serializer(array($normalizer), array($encoder));
 
-
         return new Response($serializer->serialize($user, 'json', array(
             'groups' => array('public'),
             'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
