@@ -50,21 +50,34 @@ class User
      */
     private $invoices;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->invoices = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return User
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -72,11 +85,18 @@ class User
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
+    /**
+     * @param string $firstName
+     * @return User
+     */
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
@@ -84,11 +104,18 @@ class User
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
+    /**
+     * @param string|null $lastName
+     * @return User
+     */
     public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
@@ -104,6 +131,10 @@ class User
         return $this->invoices;
     }
 
+    /**
+     * @param Invoice $invoice
+     * @return User
+     */
     public function addInvoice(Invoice $invoice): self
     {
         if (!$this->invoices->contains($invoice)) {
@@ -114,6 +145,10 @@ class User
         return $this;
     }
 
+    /**
+     * @param Invoice $invoice
+     * @return User
+     */
     public function removeInvoice(Invoice $invoice): self
     {
         if ($this->invoices->contains($invoice)) {
