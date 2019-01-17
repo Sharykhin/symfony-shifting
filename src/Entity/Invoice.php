@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,7 +22,7 @@ class Invoice
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
@@ -36,42 +37,66 @@ class Invoice
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+    private $createdAt;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    /**
+     * @param User|null $user
+     * @return Invoice
+     */
+    public function setUser(?User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAmount()
     {
         return $this->amount;
     }
 
-    public function setAmount($amount): self
+    /**
+     * @param $amount
+     * @return Invoice
+     */
+    public function setAmount(float $amount): self
     {
         $this->amount = $amount;
 
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getComment(): ?string
     {
         return $this->comment;
     }
 
+    /**
+     * @param string|null $comment
+     * @return Invoice
+     */
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
@@ -79,14 +104,21 @@ class Invoice
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    /**
+     * @param DateTimeImmutable $createdAt
+     * @return Invoice
+     */
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

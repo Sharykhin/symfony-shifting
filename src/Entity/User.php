@@ -44,7 +44,7 @@ class User
     private $lastName;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="user")
      *
      * @Groups({"private"})
      */
