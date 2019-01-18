@@ -4,6 +4,7 @@ namespace App\Service\Response;
 
 use App\Contract\Factory\ResponseSchemaFactoryInterface;
 use App\Contract\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Contract\Response\ResponseInterface;
 use App\ValueObject\ResponseSchema;
@@ -27,7 +28,7 @@ class JsonResponseService implements ResponseInterface
      */
     public function __construct(
         ResponseSchemaFactoryInterface $responseSchemaFactory,
-        SerializerInterface $serializer
+        \Symfony\Component\Serializer\SerializerInterface $serializer
     )
     {
         $this->responseSchemaFactory = $responseSchemaFactory;
@@ -52,7 +53,10 @@ class JsonResponseService implements ResponseInterface
         $response = $schema->toArray();
 
         return new Response(
-            $this->serializer->serialize($response, ['groups' => $groups]),
+            $this->serializer->serialize($response, 'json',[
+                'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
+                'groups' => $groups
+            ]),
             Response::HTTP_OK,
             [
                 'Content-Type' => 'application/json',

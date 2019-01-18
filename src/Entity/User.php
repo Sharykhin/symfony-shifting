@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -18,35 +17,29 @@ class User
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"public", "private"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=80, unique=true)
      *
-     * @Groups({"public", "private"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=60)
      *
-     * @Groups({"public", "private"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
-     *
-     * @Groups({"private"})
      */
     private $lastName;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="user")
      *
-     * @Groups({"private"})
      */
     private $invoices;
 
