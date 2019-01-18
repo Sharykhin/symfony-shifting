@@ -2,21 +2,14 @@
 
 namespace App\Controller\API;
 
-use App\Contract\User\UserCreateInterface;
-use App\Contract\User\UserRetrieverInterface;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use App\Contract\User\UserRetrieverInterface;
+use App\Contract\Response\ResponseInterface;
+use App\Contract\User\UserCreateInterface;
 
 /**
  * Class UserController
@@ -28,30 +21,20 @@ class UserController extends AbstractController
      * @Route("/users/{userId}", name="get_user", methods={"GET"}, requirements={"userId"="\d+"})
      *
      * @param UserRetrieverInterface $userRetriever
-     * @param SerializerInterface $serializer
+     * @param ResponseInterface $response
      * @param int $userId
-     * @return JsonResponse
+     * @return Response
+     * @internal param SerializerInterface $serializer
      */
     public function show(
         UserRetrieverInterface $userRetriever,
-        SerializerInterface $serializer,
+        ResponseInterface $response,
         int $userId
     )
     {
         $user = $userRetriever->findById($userId);
 
-
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-        $encoder = new JsonEncoder();
-        $normalizer = new ObjectNormalizer($classMetadataFactory, new CamelCaseToSnakeCaseNameConverter());
-        $serializer = new Serializer(array($normalizer), array($encoder));
-
-        return new Response($serializer->serialize($user, 'json', array(
-            'groups' => array('public'),
-            'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
-        )), Response::HTTP_OK, [
-            'Content-Type' => 'application/json',
-        ]);
+        return $response->success($user);
     }
 
     /**
