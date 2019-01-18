@@ -3,7 +3,7 @@
 namespace App\Contract\Factory;
 
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Interface SerializerFactoryInterface
@@ -14,7 +14,7 @@ interface SerializerFactoryInterface
     /**
      * @param array $encoders
      * @param ObjectNormalizer|null $normalizer
-     * @return Serializer
+     * @return SerializerInterface
      */
-    public function create(array $encoders = [], ObjectNormalizer $normalizer = null) : Serializer;
+    public function create(array $encoders = [], ObjectNormalizer $normalizer = null) : SerializerInterface;
 }

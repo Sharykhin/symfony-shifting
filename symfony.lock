@@ -65,14 +65,8 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "hamcrest/hamcrest-php": {
-        "version": "v2.0.0"
-    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
-    },
-    "mockery/mockery": {
-        "version": "1.0.x-dev"
     },
     "nikic/php-parser": {
         "version": "v4.1.0"
