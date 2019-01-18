@@ -13,6 +13,7 @@
 ###< symfony/web-server-bundle ###
 id_rsa_travis
 id_rsa_travis.pub
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 /phpunit.xml

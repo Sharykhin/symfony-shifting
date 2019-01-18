@@ -65,8 +65,14 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "hamcrest/hamcrest-php": {
+        "version": "v2.0.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "mockery/mockery": {
+        "version": "1.0.x-dev"
     },
     "nikic/php-parser": {
         "version": "v4.1.0"
@@ -98,6 +104,9 @@
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
     },
+    "symfony/browser-kit": {
+        "version": "v4.1.10"
+    },
     "symfony/cache": {
         "version": "v4.1.7"
     },
@@ -113,6 +122,12 @@
             "ref": "f3a28efb32f20b8740fd763651cabd780bce43da"
         }
     },
+    "symfony/contracts": {
+        "version": "v1.0.2"
+    },
+    "symfony/css-selector": {
+        "version": "v4.1.10"
+    },
     "symfony/debug": {
         "version": "v4.1.7"
     },
@@ -121,6 +136,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v4.1.7"
+    },
+    "symfony/dom-crawler": {
+        "version": "v4.1.10"
     },
     "symfony/dotenv": {
         "version": "v4.1.7"
@@ -202,6 +220,15 @@
     },
     "symfony/serializer": {
         "version": "v4.1.8"
+    },
+    "symfony/stopwatch": {
+        "version": "v4.2.2"
+    },
+    "symfony/test-pack": {
+        "version": "v1.0.2"
+    },
+    "symfony/var-exporter": {
+        "version": "v4.2.2"
     },
     "symfony/web-server-bundle": {
         "version": "3.3",
