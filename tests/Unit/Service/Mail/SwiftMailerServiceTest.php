@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Service;
+namespace App\Tests\Unit\Service\Mail;
 
 use App\Service\Mail\SwiftMailerService;
 use PHPUnit\Framework\TestCase;
