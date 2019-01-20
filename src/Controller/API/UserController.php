@@ -2,6 +2,7 @@
 
 namespace App\Controller\API;
 
+use App\Contract\Service\MailInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,22 +57,35 @@ class UserController extends AbstractController
     /**
      * @Route("/ping", name="get_ping", methods={"GET"})
      */
-    public function ping(\Swift_Mailer $mailer)
+    public function ping(\Swift_Mailer $mailer, MailInterface $mail)
     {
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('send@example.com')
-            ->setTo('recipient@example.com')
-            ->setBody(
-                $this->renderView(
-                // templates/emails/registration.html.twig
-                    'emails/registration.html.twig',
-                    ['name' => 'Sergey']
-                ),
-                'text/html'
-            )
-        ;
+//        $message = (new \Swift_Message('Hello Email'))
+//            ->setFrom('send@example.com')
+//            ->setTo('recipient@example.com')
+//            ->setBody(
+//                $this->renderView(
+//                // templates/emails/registration.html.twig
+//                    'emails/registration.html.twig',
+//                    ['name' => 'Sergey']
+//                ),
+//                'text/html'
+//            )
+//        ;
+//
+//        $mailer->send($message);
 
-        $mailer->send($message);
+        $mail->setSubject('Hello Email 2')
+        ->setFrom('send@example.com', 'serg')
+        ->setTo('recipient@example.com', 'Nasty')
+        ->setBody( $this->renderView(
+        // templates/emails/registration.html.twig
+            'emails/registration.html.twig',
+            ['name' => 'Sergey']
+        ),
+            'text/html')
+        ->send();
+
+
         return $this->json([], JsonResponse::HTTP_OK);
     }
 }

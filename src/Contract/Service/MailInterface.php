@@ -2,15 +2,42 @@
 
 namespace App\Contract\Service;
 
+/**
+ * Interface MailInterface
+ * @package App\Contract\Service
+ */
 interface MailInterface
 {
-    public function setSubject($subject) : self;
+    /**
+     * @param string $subject
+     * @return mixed
+     */
+    public function setSubject(string $subject): self;
 
-    public function setFrom($addresses, $name = null) : self;
+    /**
+     * @param $addresses
+     * @param string|null $name
+     * @return MailInterface
+     */
+    public function setFrom($addresses, string $name = null): self;
 
-    public function setTo($addresses, $name = null) : self;
+    /**
+     * @param $addresses
+     * @param string|null $name
+     * @return MailInterface
+     */
+    public function setTo($addresses, string $name = null): self;
 
-    public function setBody($body, $contentType = null, $charset = null): self;
+    /**
+     * @param string $body
+     * @param string|null $contentType
+     * @param null $charset
+     * @return MailInterface
+     */
+    public function setBody(string $body, string $contentType = null, $charset = null): self;
 
-    public function send() : void;
+    /**
+     * @return mixed
+     */
+    public function send(): void;
 }

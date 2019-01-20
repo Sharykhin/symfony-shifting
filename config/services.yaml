@@ -37,3 +37,13 @@ services:
         class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
         public: false
         tags: [serializer.normalizer]
+
+    # explicitly configure services
+
+    app.mail.message:
+        class: Swift_Message
+
+    App\Service\Mail\SwiftMailerService:
+        arguments:
+            $mailer: '@Swift_Mailer'
+            $message: '@app.mail.message'

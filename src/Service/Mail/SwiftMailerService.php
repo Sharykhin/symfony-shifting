@@ -3,39 +3,85 @@
 namespace App\Service\Mail;
 
 use App\Contract\Service\MailInterface;
+use Swift_Message;
 use Swift_Mailer;
 
+/**
+ * Class SwiftMailerService
+ * @package App\Service\Mail
+ */
 class SwiftMailerService implements MailInterface
 {
+    /** @var Swift_Mailer $mailer */
     protected $mailer;
 
-    public function __construct(Swift_Mailer $mailer)
+    /** @var Swift_Message $message */
+    protected $message;
+
+    /**
+     * SwiftMailerService constructor.
+     * @param Swift_Mailer $mailer
+     * @param Swift_Message $message
+     */
+    public function __construct(Swift_Mailer $mailer, Swift_Message $message)
     {
         $this->mailer = $mailer;
+        $this->message = $message;
     }
 
-    public function setSubject($subject): MailInterface
+    /**
+     * @param string $subject
+     * @return SwiftMailerService
+     */
+    public function setSubject(string $subject): MailInterface
     {
-        // TODO: Implement setSubject() method.
+        $this->message->setSubject($subject);
+
+        return $this;
     }
 
-    public function setFrom($addresses, $name = null): MailInterface
+    /**
+     * @param $addresses
+     * @param string|null $name
+     * @return SwiftMailerService
+     */
+    public function setFrom($addresses, string $name = null): MailInterface
     {
-        // TODO: Implement setFrom() method.
+       $this->message->setFrom($addresses, $name);
+
+       return $this;
     }
 
-    public function setTo($addresses, $name = null): MailInterface
+    /**
+     * @param $addresses
+     * @param string|null $name
+     * @return SwiftMailerService
+     */
+    public function setTo($addresses, string $name = null): MailInterface
     {
-        // TODO: Implement setTo() method.
+        $this->message->setTo($addresses, $name);
+
+        return $this;
     }
 
-    public function setBody($body, $contentType = null, $charset = null): MailInterface
+    /**
+     * @param string $body
+     * @param string|null $contentType
+     * @param null $charset
+     * @return SwiftMailerService
+     */
+    public function setBody(string $body, string $contentType = null, $charset = null): MailInterface
     {
-        // TODO: Implement setBody() method.
+        $this->message->setBody($body, $contentType, $charset);
+
+        return $this;
     }
 
+    /**
+     * @return void
+     */
     public function send(): void
     {
-        // TODO: Implement send() method.
+        $this->mailer->send($this->message);
     }
 }
