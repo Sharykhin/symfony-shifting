@@ -8,6 +8,8 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+tests/coverage
+
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
