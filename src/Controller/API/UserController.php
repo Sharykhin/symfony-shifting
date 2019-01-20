@@ -52,4 +52,26 @@ class UserController extends AbstractController
         $user = $userCreate->create($request->request->all());
         return $this->json($user, JsonResponse::HTTP_CREATED);
     }
+
+    /**
+     * @Route("/ping", name="get_ping", methods={"GET"})
+     */
+    public function ping(\Swift_Mailer $mailer)
+    {
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('send@example.com')
+            ->setTo('recipient@example.com')
+            ->setBody(
+                $this->renderView(
+                // templates/emails/registration.html.twig
+                    'emails/registration.html.twig',
+                    ['name' => 'Sergey']
+                ),
+                'text/html'
+            )
+        ;
+
+        $mailer->send($message);
+        return $this->json([], JsonResponse::HTTP_OK);
+    }
 }

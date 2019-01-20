@@ -44,4 +44,4 @@ services:
     image: djfarrelly/maildev
     container_name: invoicer-maildev
     ports:
-      - 8001:80
+      - 1080:80
