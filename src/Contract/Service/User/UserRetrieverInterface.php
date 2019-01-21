@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contract\User;
+namespace App\Contract\Service\User;
 
 use App\ViewModel\UserViewModel;
 

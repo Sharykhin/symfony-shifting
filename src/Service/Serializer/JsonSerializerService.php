@@ -3,8 +3,8 @@
 namespace App\Service\Serializer;
 
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
+use App\Contract\Service\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Contract\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Serializer;
 
 /**

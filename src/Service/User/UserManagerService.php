@@ -3,10 +3,10 @@
 namespace App\Service\User;
 
 use App\Contract\Factory\ViewModel\UserViewModelFactoryInterface;
+use App\Contract\Factory\Entity\ReportFactoryInterface;
 use App\Contract\Factory\Entity\UserFactoryInterface;
-use App\Contract\Factory\ReportFactoryInterface;
-use App\Contract\User\UserRetrieverInterface;
-use App\Contract\User\UserCreateInterface;
+use App\Contract\Service\User\UserRetrieverInterface;
+use App\Contract\Service\User\UserCreateInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\ViewModel\UserViewModel;
 use App\Entity\Report;

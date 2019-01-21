@@ -2,7 +2,7 @@
 
 namespace App\Service\Mail;
 
-use App\Contract\Mail\MailInterface;
+use App\Contract\Service\Mail\MailInterface;
 use Swift_Message;
 use Swift_Mailer;
 

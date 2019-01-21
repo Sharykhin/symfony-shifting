@@ -2,17 +2,15 @@
 
 namespace App\Controller\API;
 
-use App\Contract\Mail\MailInterface;
-use App\Contract\Serializer\SerializerInterface;
-use App\ViewModel\UserViewModel;
+use App\Contract\Service\Mail\MailInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use App\Contract\User\UserRetrieverInterface;
-use App\Contract\Response\ResponseInterface;
-use App\Contract\User\UserCreateInterface;
+use App\Contract\Service\User\UserRetrieverInterface;
+use App\Contract\Service\Response\ResponseInterface;
+use App\Contract\Service\User\UserCreateInterface;
 
 /**
  * Class UserController

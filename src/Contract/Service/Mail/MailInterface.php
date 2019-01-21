@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contract\Mail;
+namespace App\Contract\Service\Mail;
 
 /**
  * Interface MailInterface

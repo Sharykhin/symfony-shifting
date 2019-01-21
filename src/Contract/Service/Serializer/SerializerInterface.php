@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contract\Serializer;
+namespace App\Contract\Service\Serializer;
 
 /**
  * Interface SerializerInterface

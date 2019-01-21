@@ -3,9 +3,9 @@
 namespace App\Service\Response;
 
 use App\Contract\Factory\ResponseSchemaFactoryInterface;
-use App\Contract\Serializer\SerializerInterface;
+use App\Contract\Service\Serializer\SerializerInterface;
+use App\Contract\Service\Response\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
-use App\Contract\Response\ResponseInterface;
 use App\ValueObject\ResponseSchema;
 
 /**
