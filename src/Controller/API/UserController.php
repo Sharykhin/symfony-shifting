@@ -3,6 +3,8 @@
 namespace App\Controller\API;
 
 use App\Contract\Mail\MailInterface;
+use App\Contract\Serializer\SerializerInterface;
+use App\ViewModel\UserViewModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,9 +57,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/ping", name="get_ping", methods={"GET"})
+     * @Route("/mail", name="get_ping", methods={"GET"})
      */
-    public function ping(\Swift_Mailer $mailer, MailInterface $mail)
+    public function mail(\Swift_Mailer $mailer, MailInterface $mail)
     {
 //        $message = (new \Swift_Message('Hello Email'))
 //            ->setFrom('send@example.com')
@@ -87,5 +89,19 @@ class UserController extends AbstractController
 
 
         return $this->json([], JsonResponse::HTTP_OK);
+    }
+
+    /**
+     * @Route("/ping", name="get_ping", methods={"GET"})
+     */
+    public function ping(SerializerInterface $serializer)
+    {
+        $user = new UserViewModel();
+        $user->setId(10);
+        $user->setFullName('Siarhei Sharykhin');
+
+        die(var_dump($serializer->serialize($user, ['groups' => ['private']])));
+
+        return $this->json(['message' => 'OK'], JsonResponse::HTTP_OK);
     }
 }
