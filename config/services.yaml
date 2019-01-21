@@ -38,3 +38,13 @@ services:
         public: false
         arguments: ['@serializer.mapping.class_metadata_factory', '@serializer.name_converter.camel_case_to_snake_case']
         tags: [serializer.normalizer]
+
+    # explicitly configure services
+
+    app.mail.message:
+        class: Swift_Message
+
+    App\Service\Mail\SwiftMailerService:
+        arguments:
+            $mailer: '@Swift_Mailer'
+            $message: '@app.mail.message'

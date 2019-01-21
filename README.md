@@ -33,3 +33,7 @@ docker-compose exec invoicer-php composer install
 
 5. Open browser on [http://localhost:8000](http://localhost:8000) to check whether
 everything works as expected.
+
+#### PHPUnit Code Coverage
+
+To see phpunit code coverage open browser on [http://localhost:8005](http://localhost:8005)

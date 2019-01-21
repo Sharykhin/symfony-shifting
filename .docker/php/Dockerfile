@@ -13,6 +13,11 @@ RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
 
 RUN docker-php-ext-install pdo pdo_mysql
 
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
 RUN groupadd dev -g 999
 RUN useradd dev -g dev -d /home/dev -m
 

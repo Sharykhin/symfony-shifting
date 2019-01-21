@@ -44,4 +44,17 @@ services:
     image: djfarrelly/maildev
     container_name: invoicer-maildev
     ports:
-      - 8001:80
+      - 1080:80
+
+  invoicer-coverage:
+    image: invoicer-php
+    volumes:
+      - .:/home/www/invoicer:cached
+    command: >
+      bash -c "./bin/phpunit --coverage-html tests/coverage
+      && cd tests/coverage
+      && php -S 0.0.0.0:8005"
+    depends_on:
+      - invoicer-php
+    ports:
+      - 8005:8005

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Tests\Service;
+namespace App\Tests\Unit\Service\Serializer;
 
-use Symfony\Component\Serializer\SerializerInterface;
-use App\Contract\Factory\SerializerFactoryInterface;
+use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\Serializer\JsonSerializerService;
 use PHPUnit\Framework\TestCase;
@@ -20,14 +19,7 @@ class JsonSerializerServiceTest extends TestCase
         $context = ['groups' => ['public']];
         $response = '{"foo": "bar"}';
 
-        $mockSerializerFactory = $this->createMock(SerializerFactoryInterface::class);
-        $mockSerializer = $this->createMock(SerializerInterface::class);
-
-        $mockSerializerFactory
-            ->expects($this->once())
-            ->method('create')
-            ->with(['json'])
-            ->willReturn($mockSerializer);
+        $mockSerializer = $this->createMock(SymfonySerializerInterface::class);
 
         $mockSerializer
             ->expects($this->once())
@@ -37,7 +29,7 @@ class JsonSerializerServiceTest extends TestCase
             ], $context))
             ->willReturn($response);
 
-        $service = new JsonSerializerService($mockSerializerFactory);
+        $service = new JsonSerializerService($mockSerializer);
         $actual = $service->serialize($data, $context);
 
         $this->assertEquals($response, $actual);
