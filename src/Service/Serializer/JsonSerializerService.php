@@ -2,8 +2,8 @@
 
 namespace App\Service\Serializer;
 
-use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
 use App\Contract\Service\Serializer\SerializerInterface;
+use App\Contract\Factory\SerializerFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Serializer;
 
@@ -18,13 +18,13 @@ class JsonSerializerService implements SerializerInterface
 
     /**
      * JsonSerializerService constructor.
-     * @param SymfonySerializerInterface $serializer
+     * @param SerializerFactoryInterface $serializerFactory
      */
     public function __construct(
-        SymfonySerializerInterface $serializer
+        SerializerFactoryInterface $serializerFactory
     )
     {
-        $this->serializer = $serializer;
+        $this->serializer = $serializerFactory->create(['json']);
     }
 
     /**

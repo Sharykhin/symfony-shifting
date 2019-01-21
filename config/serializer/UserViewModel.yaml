@@ -1,7 +1,0 @@
-App\ViewModel\UserViewModel:
-  attributes:
-    id:
-      groups: ['public']
-
-    fullName:
-      groups: ['public']

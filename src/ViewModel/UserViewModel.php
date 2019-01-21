@@ -2,16 +2,26 @@
 
 namespace App\ViewModel;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * Class UserViewModel
  * @package App\ViewModel
  */
 class UserViewModel
 {
-    /** @var int $id */
+    /**
+     * @var int $id
+     *
+     * @Groups({"public", "private"})
+     */
     protected $id;
 
-    /** @var string $fullName */
+    /**
+     * @var string $fullName
+     *
+     * @Groups({"private"})
+     */
     protected $fullName;
 
     /**

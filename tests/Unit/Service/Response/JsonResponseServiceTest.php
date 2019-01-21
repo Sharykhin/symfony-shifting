@@ -3,7 +3,7 @@
 namespace App\Tests\Unit\Service\Response;
 
 use App\Contract\Factory\ResponseSchemaFactoryInterface;
-use App\Contract\Serializer\SerializerInterface;
+use App\Contract\Service\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\Response\JsonResponseService;
 use App\ValueObject\ResponseSchema;
