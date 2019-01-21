@@ -68,7 +68,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/mail", name="get_ping", methods={"GET"})
+     * @Route("/mail", name="get_mail", methods={"GET"})
      */
     public function mail(\Swift_Mailer $mailer, MailInterface $mail)
     {
