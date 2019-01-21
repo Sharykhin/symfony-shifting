@@ -3,7 +3,9 @@
 namespace App\Controller\API;
 
 use App\Contract\Service\Mail\MailInterface;
+use App\Event\UserCreatedEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +36,11 @@ class UserController extends AbstractController
     {
         $user = $userRetriever->findById($userId);
 
+        if (is_null($user)) {
+            // TODO: use translation package
+            return $response->notFound('user was not found');
+        }
+
         return $response->success($user);
     }
 
@@ -43,15 +50,19 @@ class UserController extends AbstractController
      * @param Request $request
      * @param UserCreateInterface $userCreate
      * @param ResponseInterface $response
+     * @param EventDispatcherInterface $dispatcher
      * @return Response
      */
     public function store(
         Request $request,
         UserCreateInterface $userCreate,
-        ResponseInterface $response
+        ResponseInterface $response,
+        EventDispatcherInterface $dispatcher
     ) : Response
     {
         $user = $userCreate->create($request->request->all());
+
+        $dispatcher->dispatch(UserCreatedEvent::NAME, new UserCreatedEvent($user));
 
         return $response->created($user);
     }

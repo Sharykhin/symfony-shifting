@@ -29,18 +29,29 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+#    get_set_method_normalizer:
+#        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+#        public: false
+#        arguments: ['@serializer.mapping.class_metadata_factory', '@serializer.name_converter.camel_case_to_snake_case']
+#        tags: [serializer.normalizer]
+
+
+    # Listeners:
     App\EventListener\ParseJsonBodyListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller }
+      tags:
+        - { name: kernel.event_listener, event: kernel.controller }
 
-    get_set_method_normalizer:
-        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
-        public: false
-        arguments: ['@serializer.mapping.class_metadata_factory', '@serializer.name_converter.camel_case_to_snake_case']
-        tags: [serializer.normalizer]
+    App\EventListener\ExceptionListener:
+      tags:
+        - { name: kernel.event_listener, event: kernel.exception }
 
-    # explicitly configure services
+    App\EventListener\UserCreatedListener:
+      arguments: ['@monolog.logger.users']
+      tags:
+        - { name: kernel.event_listener, event: user.created, method: onUserCreated }
 
+
+    # Services:
     app.mail.message:
         class: Swift_Message
 

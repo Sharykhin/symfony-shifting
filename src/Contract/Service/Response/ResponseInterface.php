@@ -27,4 +27,20 @@ interface ResponseInterface
      * @return Response
      */
     public function created($data, array $warnings = null, array $meta = null, array $groups = []) : Response;
+
+    /**
+     * @param string $error
+     * @param array|null $warnings
+     * @param array|null $meta
+     * @return Response
+     */
+    public function notFound(string $error, array $warnings = null, array $meta = null) : Response;
+
+    /**
+     * @param string $error
+     * @param array|null $warnings
+     * @param array|null $meta
+     * @return Response
+     */
+    public function forbidden(string $error, array $warnings = null, array $meta = null) : Response;
 }

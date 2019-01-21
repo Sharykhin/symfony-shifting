@@ -70,6 +70,32 @@ class JsonResponseService implements ResponseInterface
         return $this->sendResponse($schema, $groups, Response::HTTP_CREATED);
     }
 
+    public function notFound(string $error, array $warnings = null, array $meta = null): Response
+    {
+        /** @var ResponseSchema $schema */
+        $schema = $this->responseSchemaFactory->create();
+        $schema->warnings = $warnings;
+        $schema->meta = $meta;
+        $schema->errors = [
+            'message' => $error
+        ];
+
+        return $this->sendResponse($schema, [], Response::HTTP_NOT_FOUND);
+    }
+
+    public function forbidden(string $error, array $warnings = null, array $meta = null): Response
+    {
+        /** @var ResponseSchema $schema */
+        $schema = $this->responseSchemaFactory->create();
+        $schema->warnings = $warnings;
+        $schema->meta = $meta;
+        $schema->errors = [
+            'message' => $error
+        ];
+
+        return $this->sendResponse($schema, [], Response::HTTP_FORBIDDEN);
+    }
+
     /**
      * @param ResponseSchema $schema
      * @param array $groups
