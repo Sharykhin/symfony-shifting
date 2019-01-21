@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contract\Factory;
+namespace App\Contract\Factory\Entity;
 
 use App\Entity\User;
 

@@ -2,7 +2,7 @@
 
 namespace App\Contract\User;
 
-use App\Entity\User;
+use App\ViewModel\UserViewModel;
 
 /**
  * Interface UserCreateInterface
@@ -12,7 +12,7 @@ interface UserCreateInterface
 {
     /**
      * @param array $data
-     * @return User
+     * @return UserViewModel
      */
-    public function create(array $data) : User;
+    public function create(array $data) : UserViewModel;
 }

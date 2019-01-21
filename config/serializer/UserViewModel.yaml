@@ -1,7 +1,7 @@
 App\ViewModel\UserViewModel:
   attributes:
     id:
-      groups: ['private']
+      groups: ['public']
 
     fullName:
       groups: ['public']

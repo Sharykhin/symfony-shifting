@@ -27,13 +27,12 @@ class UserController extends AbstractController
      * @param ResponseInterface $response
      * @param int $userId
      * @return Response
-     * @internal param SerializerInterface $serializer
      */
     public function show(
         UserRetrieverInterface $userRetriever,
         ResponseInterface $response,
         int $userId
-    )
+    ) : Response
     {
         $user = $userRetriever->findById($userId);
 
@@ -45,15 +44,18 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param UserCreateInterface $userCreate
-     * @return JsonResponse
+     * @param ResponseInterface $response
+     * @return Response
      */
     public function store(
         Request $request,
-        UserCreateInterface $userCreate
-    ) : JsonResponse
+        UserCreateInterface $userCreate,
+        ResponseInterface $response
+    ) : Response
     {
         $user = $userCreate->create($request->request->all());
-        return $this->json($user, JsonResponse::HTTP_CREATED);
+
+        return $response->created($user);
     }
 
     /**
@@ -89,19 +91,5 @@ class UserController extends AbstractController
 
 
         return $this->json([], JsonResponse::HTTP_OK);
-    }
-
-    /**
-     * @Route("/ping", name="get_ping", methods={"GET"})
-     */
-    public function ping(SerializerInterface $serializer)
-    {
-        $user = new UserViewModel();
-        $user->setId(10);
-        $user->setFullName('Siarhei Sharykhin');
-
-        die(var_dump($serializer->serialize($user, ['groups' => ['private']])));
-
-        return $this->json(['message' => 'OK'], JsonResponse::HTTP_OK);
     }
 }

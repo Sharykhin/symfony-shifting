@@ -4,11 +4,9 @@ namespace App\Service\Response;
 
 use App\Contract\Factory\ResponseSchemaFactoryInterface;
 use App\Contract\Serializer\SerializerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Contract\Response\ResponseInterface;
 use App\ValueObject\ResponseSchema;
-
 
 /**
  * Class JsonResponseService
@@ -51,11 +49,40 @@ class JsonResponseService implements ResponseInterface
         $schema->warnings = $warnings;
         $schema->meta = $meta;
 
+        return $this->sendResponse($schema, $groups, Response::HTTP_OK);
+    }
+
+    /**
+     * @param $data
+     * @param array|null $warnings
+     * @param array|null $meta
+     * @param array $groups
+     * @return Response
+     */
+    public function created($data, array $warnings = null, array $meta = null, array $groups = ['public']): Response
+    {
+        /** @var ResponseSchema $schema */
+        $schema = $this->responseSchemaFactory->create();
+        $schema->result = $data;
+        $schema->warnings = $warnings;
+        $schema->meta = $meta;
+
+        return $this->sendResponse($schema, $groups, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @param ResponseSchema $schema
+     * @param array $groups
+     * @param int $statusCode
+     * @return Response
+     */
+    protected function sendResponse(ResponseSchema $schema, array $groups, int $statusCode) : Response
+    {
         $response = $schema->toArray();
 
         return new Response(
             $this->serializer->serialize($response, ['groups' => $groups]),
-            Response::HTTP_OK,
+            $statusCode,
             [
                 'Content-Type' => 'application/json',
             ]

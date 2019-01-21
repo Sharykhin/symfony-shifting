@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Factory;
+namespace App\Factory\Entity;
 
-use App\Contract\Factory\UserFactoryInterface;
+use App\Contract\Factory\Entity\UserFactoryInterface;
 use App\Entity\User;
 
 /**

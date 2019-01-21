@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Factory;
+namespace App\Factory\Entity;
 
-use App\Contract\Factory\ReportFactoryInterface;
+use App\Contract\Factory\Entity\ReportFactoryInterface;
 use App\Entity\Report;
 
 /**

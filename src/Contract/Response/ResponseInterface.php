@@ -18,4 +18,13 @@ interface ResponseInterface
      * @return Response
      */
     public function success($data, array $warnings = null, array $meta = null, array $groups = []) : Response;
+
+    /**
+     * @param $data
+     * @param array|null $warnings
+     * @param array|null $meta
+     * @param array $groups
+     * @return Response
+     */
+    public function created($data, array $warnings = null, array $meta = null, array $groups = []) : Response;
 }

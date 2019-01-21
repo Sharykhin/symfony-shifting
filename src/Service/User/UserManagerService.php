@@ -2,14 +2,16 @@
 
 namespace App\Service\User;
 
+use App\Contract\Factory\ViewModel\UserViewModelFactoryInterface;
+use App\Contract\Factory\Entity\UserFactoryInterface;
 use App\Contract\Factory\ReportFactoryInterface;
-use App\Contract\Factory\UserFactoryInterface;
 use App\Contract\User\UserRetrieverInterface;
 use App\Contract\User\UserCreateInterface;
-use App\Entity\Report;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use App\ViewModel\UserViewModel;
+use App\Entity\Report;
 use App\Entity\User;
+use DateTime;
 
 /**
  * Class UserManagerService
@@ -26,41 +28,56 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
     /** @var ReportFactoryInterface $reportFactory */
     protected $reportFactory;
 
+    /** @var UserViewModelFactoryInterface $userViewModelFactory */
+    protected $userViewModelFactory;
+
     /**
      * UserManagerService constructor.
      * @param EntityManagerInterface $em
      * @param UserFactoryInterface $userFactory
      * @param ReportFactoryInterface $reportFactory
+     * @param UserViewModelFactoryInterface $userViewModelFactory
      */
     public function __construct(
         EntityManagerInterface $em,
         UserFactoryInterface $userFactory,
-        ReportFactoryInterface $reportFactory
+        ReportFactoryInterface $reportFactory,
+        UserViewModelFactoryInterface $userViewModelFactory
     )
     {
         $this->em = $em;
         $this->userFactory = $userFactory;
         $this->reportFactory = $reportFactory;
+        $this->userViewModelFactory = $userViewModelFactory;
+
     }
 
     /**
      * @param int $userId
-     * @return User|null
+     * @return UserViewModel|null
      */
-    public function findById(int $userId): ?User
+    public function findById(int $userId): ?UserViewModel
     {
         /** @var User|null $user */
         $user = $this->em->getRepository(User::class)->find($userId);
 
-        return $user;
+        if (is_null($user)) {
+            return null;
+        }
+
+        /** @var UserViewModel $userViewModel */
+        $userViewModel = $this->userViewModelFactory->create();
+        $userViewModel->setId($user->getId());
+        $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
+
+        return $userViewModel;
     }
 
     /**
      * @param array $data
-     * @return User
-     * @throws \Exception
+     * @return UserViewModel
      */
-    public function create(array $data) : User
+    public function create(array $data) : UserViewModel
     {
         /** @var User $user */
         $user = $this->userFactory->create();
@@ -78,6 +95,11 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
 
         $this->em->flush();
 
-        return $user;
+        /** @var UserViewModel $userViewModel */
+        $userViewModel = $this->userViewModelFactory->create();
+        $userViewModel->setId($user->getId());
+        $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
+
+        return $userViewModel;
     }
 }

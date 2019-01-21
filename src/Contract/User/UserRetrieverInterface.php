@@ -2,7 +2,7 @@
 
 namespace App\Contract\User;
 
-use App\Entity\User;
+use App\ViewModel\UserViewModel;
 
 /**
  * Interface UserRetrieverInterface
@@ -12,7 +12,7 @@ interface UserRetrieverInterface
 {
     /**
      * @param int $userId
-     * @return User|null
+     * @return UserViewModel|null
      */
-    public function findById(int $userId) : ?User;
+    public function findById(int $userId) : ?UserViewModel;
 }
