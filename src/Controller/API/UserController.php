@@ -2,7 +2,7 @@
 
 namespace App\Controller\API;
 
-use App\Contract\Service\MailInterface;
+use App\Contract\Mail\MailInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
