@@ -2,8 +2,6 @@
 
 namespace App\Factory;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
@@ -19,18 +17,9 @@ use InvalidArgumentException;
  * Class SerializerFactory
  * @package App\Factory
  */
-class SerializerFactory implements SerializerFactoryInterface
+class AnnotationSerializerFactory implements SerializerFactoryInterface
 {
     const JSON_ENCODER = 'json';
-
-    protected $container;
-
-    public function __construct(
-        ContainerInterface $container
-    )
-    {
-        $this->container = $container;
-    }
 
     /**
      * @param array $encoders

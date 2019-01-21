@@ -10,4 +10,4 @@ App\Entity\User:
       groups: ['public']
 
     lastName:
-      groups: ['public', 'private']
+      groups: ['private']

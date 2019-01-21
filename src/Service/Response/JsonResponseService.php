@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Contract\Response\ResponseInterface;
 use App\ValueObject\ResponseSchema;
 
+
 /**
  * Class JsonResponseService
  * @package App\Service\Response
@@ -28,7 +29,7 @@ class JsonResponseService implements ResponseInterface
      */
     public function __construct(
         ResponseSchemaFactoryInterface $responseSchemaFactory,
-        \Symfony\Component\Serializer\SerializerInterface $serializer
+        SerializerInterface $serializer
     )
     {
         $this->responseSchemaFactory = $responseSchemaFactory;
@@ -53,10 +54,7 @@ class JsonResponseService implements ResponseInterface
         $response = $schema->toArray();
 
         return new Response(
-            $this->serializer->serialize($response, 'json',[
-                'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
-                'groups' => $groups
-            ]),
+            $this->serializer->serialize($response, ['groups' => $groups]),
             Response::HTTP_OK,
             [
                 'Content-Type' => 'application/json',
