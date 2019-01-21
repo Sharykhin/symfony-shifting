@@ -58,3 +58,9 @@ services:
       - invoicer-php
     ports:
       - 8005:8005
+
+  invoicer-rabbitmq:
+    image: rabbitmq:3-management
+    container_name: invoicer-rabbitmq
+    ports:
+      - 8080:15672

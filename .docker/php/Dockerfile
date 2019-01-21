@@ -11,7 +11,7 @@ COPY php-fpm-pool.conf /etc/php/7.2.3/pool.d/www.conf
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
    mv composer.phar /usr/local/bin/composer
 
-RUN docker-php-ext-install pdo pdo_mysql zip
+RUN docker-php-ext-install pdo pdo_mysql zip bcmath
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
