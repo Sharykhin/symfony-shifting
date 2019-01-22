@@ -4,4 +4,4 @@ parameters:
 
 swiftmailer:
     url: '%env(MAILER_URL)%'
-    spool: { type: 'memory' }
+    #spool: { type: 'memory' } # no need since we send mails through the queue workers

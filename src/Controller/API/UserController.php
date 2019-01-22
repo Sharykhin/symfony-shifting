@@ -93,7 +93,7 @@ class UserController extends AbstractController
         ->setBody( $this->renderView(
         // templates/emails/registration.html.twig
             'emails/registration.html.twig',
-            ['name' => 'Sergey']
+            ['full_name' => 'Sergey']
         ),
             'text/html')
         ->send();

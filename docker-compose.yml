@@ -32,6 +32,7 @@ services:
     build: .docker/php
     image: invoicer-php
     container_name: invoicer-php
+    command: bash -c "composer install && php-fpm"
     volumes:
       - .:/home/www/invoicer:cached
     environment:
@@ -71,7 +72,7 @@ services:
     container_name: invoicer-worker
     volumes:
       - .:/home/www/invoicer:cached
-    command: bash -c "sleep 20 && ./bin/console messenger:consume-message amqp"
+    entrypoint: ./.docker/worker/start.sh
     restart: unless-stopped
     depends_on:
       - invoicer-php
