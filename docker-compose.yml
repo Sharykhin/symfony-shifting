@@ -56,6 +56,7 @@ services:
       bash -c "./bin/phpunit --coverage-html tests/coverage
       && cd tests/coverage
       && php -S 0.0.0.0:8005"
+    restart: unless-stopped
     depends_on:
       - invoicer-php
     ports:
