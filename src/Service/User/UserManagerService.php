@@ -69,6 +69,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $userViewModel = $this->userViewModelFactory->create();
         $userViewModel->setId($user->getId());
         $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
+        $userViewModel->setEmail($user->getEmail());
 
         return $userViewModel;
     }
@@ -99,6 +100,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $userViewModel = $this->userViewModelFactory->create();
         $userViewModel->setId($user->getId());
         $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
+        $userViewModel->setEmail($user->getEmail());
 
         return $userViewModel;
     }

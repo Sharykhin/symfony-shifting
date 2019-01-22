@@ -1,2 +1,8 @@
-Hello {{ name }}
-<p>Thanks for registering</p>
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block body %}
+    Hello <b>{{ full_name }}</b>
+    <p>Thanks for registering</p>
+{% endblock %}

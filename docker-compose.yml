@@ -48,6 +48,7 @@ services:
 
   invoicer-coverage:
     image: invoicer-php
+    container_name: invoicer-coverage
     volumes:
       - .:/home/www/invoicer:cached
     command: >
@@ -64,3 +65,14 @@ services:
     container_name: invoicer-rabbitmq
     ports:
       - 8080:15672
+
+  invoicer-worker:
+    image: invoicer-php
+    container_name: invoicer-worker
+    volumes:
+      - .:/home/www/invoicer:cached
+    command: bash -c "sleep 20 && ./bin/console messenger:consume-message amqp"
+    restart: unless-stopped
+    depends_on:
+      - invoicer-php
+      - invoicer-rabbitmq

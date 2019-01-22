@@ -25,6 +25,13 @@ class UserViewModel
     protected $fullName;
 
     /**
+     * @var string $email
+     *
+     * @Groups({"public", "private"})
+     */
+    protected $email;
+
+    /**
      * @param int $id
      * @return UserViewModel
      */
@@ -38,7 +45,7 @@ class UserViewModel
     /**
      * @return int|null
      */
-    public function getId() : ?int
+    public function getId() : int
     {
         return $this->id;
     }
@@ -57,8 +64,27 @@ class UserViewModel
     /**
      * @return null|string
      */
-    public function getFullName() : ?string
+    public function getFullName() : string
     {
         return $this->fullName;
+    }
+
+    /**
+     * @param string $email
+     * @return UserViewModel
+     */
+    public function setEmail(string $email) : self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail() : string
+    {
+        return $this->email;
     }
 }
