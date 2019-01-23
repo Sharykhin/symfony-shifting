@@ -136,8 +136,8 @@ class SwiftMailerServiceTest extends TestCase
     }
 
     /**
- * @test setTo
- */
+     * @test setTo
+     */
     public function setToWithAddressAndName()
     {
         $address = 'lucy_mcclain@test.com';
@@ -177,5 +177,40 @@ class SwiftMailerServiceTest extends TestCase
 
         $actual = $service->setTo($addresses);
         $this->assertInstanceOf(SwiftMailerService::class, $actual);
+    }
+
+    public function testSetBody()
+    {
+        $body = 'Hello World';
+        $contentType = 'text/html';
+        $charset = 'UTF-8';
+
+        $mockMailer = $this->createMock(Swift_Mailer::class);
+        $mockMessage = $this->createMock(Swift_Message::class);
+
+        $mockMessage
+            ->expects($this->once())
+            ->method('setBody')
+            ->with($body, $contentType, $charset);
+
+        $service = new SwiftMailerService($mockMailer, $mockMessage);
+
+        $actual = $service->setBody($body, $contentType, $charset);
+        $this->assertInstanceOf(SwiftMailerService::class, $actual);
+    }
+
+    public function testSend()
+    {
+        $mockMailer = $this->createMock(Swift_Mailer::class);
+        $mockMessage = $this->createMock(Swift_Message::class);
+
+        $mockMailer
+            ->expects($this->once())
+            ->method('send')
+            ->with();
+
+        $service = new SwiftMailerService($mockMailer, $mockMessage);
+
+        $service->send();
     }
 }

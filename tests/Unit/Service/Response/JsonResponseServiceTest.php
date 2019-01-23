@@ -82,4 +82,39 @@ class JsonResponseServiceTest extends TestCase
         $this->assertEquals(Response::HTTP_CREATED, $actual->getStatusCode());
         $this->assertEquals('application/json', $actual->headers->get('Content-Type'));
     }
+
+    public function testNotFound()
+    {
+        $error = 'user was not found';
+        $data = ['message' => $error];
+        $response = '{"message": "' . $error . '"}';
+
+        $mockResponseSchemaFactory = $this->createMock(ResponseSchemaFactoryInterface::class);
+        $mockSerializer = $this->createMock(SerializerInterface::class);
+        $mockResponseSchema = $this->createMock(ResponseSchema::class);
+
+        $mockResponseSchemaFactory
+            ->expects($this->once())
+            ->method('create')
+            ->with()
+            ->willReturn($mockResponseSchema);
+
+        $mockResponseSchema
+            ->expects($this->once())
+            ->method('toArray')
+            ->with()
+            ->willReturn($data);
+
+        $mockSerializer
+            ->expects($this->once())
+            ->method('serialize')
+            ->with($data, ['groups' => []])
+            ->willReturn($response);
+
+        $service = new JsonResponseService($mockResponseSchemaFactory, $mockSerializer);
+
+        $actual = $service->notFound($error);
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $actual->getStatusCode());
+        $this->assertEquals('application/json', $actual->headers->get('Content-Type'));
+    }
 }
