@@ -36,15 +36,30 @@ services:
 #        arguments: ['@serializer.mapping.class_metadata_factory', '@serializer.name_converter.camel_case_to_snake_case']
 #        tags: [serializer.normalizer]
 
-
     # Listeners:
+    App\EventListener\ExceptionListener:
+      tags:
+        - { name: kernel.event_listener, event: kernel.exception }
+
+    App\EventListener\EnableDebugQueriesListener:
+      arguments: ['@service_container', '@doctrine_logger']
+      tags:
+        - { name: kernel.event_listener, event: kernel.request }
+
+    App\EventListener\SetLocaleListener:
+      arguments: ['@service_container', '@doctrine_logger']
+      tags:
+        - { name: kernel.event_listener, event: kernel.request, priority: 18 }
+
     App\EventListener\ParseJsonBodyListener:
       tags:
         - { name: kernel.event_listener, event: kernel.controller }
 
-    App\EventListener\ExceptionListener:
+    App\EventListener\DebugQueriesListener:
+      arguments: ['@Doctrine\DBAL\Logging\DebugStack']
       tags:
-        - { name: kernel.event_listener, event: kernel.exception }
+        - { name: kernel.event_listener, event: kernel.response }
+
 
     App\EventListener\UserCreatedListener:
       arguments: ['@monolog.logger.users']
@@ -60,3 +75,10 @@ services:
         arguments:
             $mailer: '@Swift_Mailer'
             $message: '@app.mail.message'
+
+    Doctrine\DBAL\Logging\DebugStack:
+      class: Doctrine\DBAL\Logging\DebugStack
+
+    # I don't why but it requires by symfony, since it can't recognize Doctrine\DBAL\Logging\DebugStack as a service
+    doctrine_logger:
+      alias: Doctrine\DBAL\Logging\DebugStack

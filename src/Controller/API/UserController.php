@@ -2,23 +2,18 @@
 
 namespace App\Controller\API;
 
-use App\Contract\Service\Mail\MailInterface;
 use App\Contract\Service\Validate\ValidateInterface;
 use App\Event\UserCreatedEvent;
 use App\Request\Constraint\User\UserCreateConstraint;
-use App\Service\Validate\ValidateService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Contract\Service\User\UserRetrieverInterface;
 use App\Contract\Service\Response\ResponseInterface;
 use App\Contract\Service\User\UserCreateInterface;
-use Symfony\Component\Validator\ConstraintViolation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class UserController
@@ -31,20 +26,21 @@ class UserController extends AbstractController
      *
      * @param UserRetrieverInterface $userRetriever
      * @param ResponseInterface $response
+     * @param TranslatorInterface $translator
      * @param int $userId
      * @return Response
      */
     public function show(
         UserRetrieverInterface $userRetriever,
         ResponseInterface $response,
+        TranslatorInterface $translator,
         int $userId
     ) : Response
     {
         $user = $userRetriever->findById($userId);
 
         if (is_null($user)) {
-            // TODO: use translation package
-            return $response->notFound('user was not found');
+            return $response->notFound($translator->trans('User with id %id% was not found', ['%id%' => $userId]));
         }
 
         return $response->success($user);
@@ -55,6 +51,8 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param UserCreateInterface $userCreate
+     * @param UserRetrieverInterface $userRetriever
+     * @param TranslatorInterface $translator
      * @param ValidateInterface $validate
      * @param ResponseInterface $response
      * @param EventDispatcherInterface $dispatcher
@@ -63,15 +61,27 @@ class UserController extends AbstractController
     public function store(
         Request $request,
         UserCreateInterface $userCreate,
+        UserRetrieverInterface $userRetriever,
+        TranslatorInterface $translator,
         ValidateInterface $validate,
         ResponseInterface $response,
         EventDispatcherInterface $dispatcher
     ) : Response
     {
-        $validatorBag = $validate->validate($request->request->all(), UserCreateConstraint::class, ['creating']);
+        $validatorBag = $validate->validate(
+            $request->request->all(),
+            UserCreateConstraint::class,
+            ['creating']
+        );
 
         if (!$validatorBag->isValid()) {
             return $response->badRequest($validatorBag->getErrors());
+        }
+
+        $user = $userRetriever->findByEmail($request->get('email'));
+
+        if (!is_null($user)) {
+            return $response->badRequest(['email' => $translator->trans('User with such email already exists')]);
         }
 
         $user = $userCreate->create($request->request->all());
@@ -79,40 +89,5 @@ class UserController extends AbstractController
         $dispatcher->dispatch(UserCreatedEvent::NAME, new UserCreatedEvent($user));
 
         return $response->created($user);
-    }
-
-    /**
-     * @Route("/mail", name="get_mail", methods={"GET"})
-     */
-    public function mail(\Swift_Mailer $mailer, MailInterface $mail)
-    {
-//        $message = (new \Swift_Message('Hello Email'))
-//            ->setFrom('send@example.com')
-//            ->setTo('recipient@example.com')
-//            ->setBody(
-//                $this->renderView(
-//                // templates/emails/registration.html.twig
-//                    'emails/registration.html.twig',
-//                    ['name' => 'Sergey']
-//                ),
-//                'text/html'
-//            )
-//        ;
-//
-//        $mailer->send($message);
-
-        $mail->setSubject('Hello Email 2')
-        ->setFrom('send@example.com', 'serg')
-        ->setTo('recipient@example.com', 'Nasty')
-        ->setBody( $this->renderView(
-        // templates/emails/registration.html.twig
-            'emails/registration.html.twig',
-            ['full_name' => 'Sergey']
-        ),
-            'text/html')
-        ->send();
-
-
-        return $this->json([], JsonResponse::HTTP_OK);
     }
 }

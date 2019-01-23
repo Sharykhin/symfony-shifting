@@ -2,7 +2,6 @@
 
 namespace App\Request\Constraint\User;
 
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Request\Constraint\AbstractConstrain;
 

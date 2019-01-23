@@ -15,4 +15,10 @@ interface UserRetrieverInterface
      * @return UserViewModel|null
      */
     public function findById(int $userId) : ?UserViewModel;
+
+    /**
+     * @param string $email
+     * @return UserViewModel|null
+     */
+    public function findByEmail(string $email) : ?UserViewModel;
 }

@@ -75,8 +75,31 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
     }
 
     /**
+     * @param string $email
+     * @return UserViewModel|null
+     */
+    public function findByEmail(string $email): ?UserViewModel
+    {
+        /** @var User|null $user */
+        $user = $this->em->getRepository(User::class)->findOneByEmail($email);
+
+        if (is_null($user)) {
+            return null;
+        }
+
+        /** @var UserViewModel $userViewModel */
+        $userViewModel = $this->userViewModelFactory->create();
+        $userViewModel->setId($user->getId());
+        $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
+        $userViewModel->setEmail($user->getEmail());
+
+        return $userViewModel;
+    }
+
+    /**
      * @param array $data
      * @return UserViewModel
+     * @throws \Exception
      */
     public function create(array $data) : UserViewModel
     {
