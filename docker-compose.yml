@@ -13,6 +13,8 @@ services:
     volumes:
       - .docker/apache/vhosts:/etc/apache2/sites-enabled
       - .:/home/www/invoicer
+    links:
+      - invoicer-php
     depends_on:
       - invoicer-php
 
@@ -37,9 +39,14 @@ services:
       - .:/home/www/invoicer:cached
     environment:
       - maildev_host=invoicer-maildev
+    links:
+      - invoicer-maildev
+      - invoicer-mysql
+      - invoicer-rabbitmq
     depends_on:
       - invoicer-maildev
       - invoicer-mysql
+      - invoicer-rabbitmq
 
   invoicer-maildev:
     image: djfarrelly/maildev
@@ -75,6 +82,8 @@ services:
       - .:/home/www/invoicer:cached
     entrypoint: ./.docker/worker/start.sh
     restart: unless-stopped
+    links:
+      - invoicer-rabbitmq
     depends_on:
       - invoicer-php
       - invoicer-rabbitmq
