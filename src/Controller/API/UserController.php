@@ -3,7 +3,10 @@
 namespace App\Controller\API;
 
 use App\Contract\Service\Mail\MailInterface;
+use App\Contract\Service\Validate\ValidateInterface;
 use App\Event\UserCreatedEvent;
+use App\Request\Constraint\User\UserCreateConstraint;
+use App\Service\Validate\ValidateService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Contract\Service\User\UserRetrieverInterface;
 use App\Contract\Service\Response\ResponseInterface;
 use App\Contract\Service\User\UserCreateInterface;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class UserController
@@ -49,6 +55,7 @@ class UserController extends AbstractController
      *
      * @param Request $request
      * @param UserCreateInterface $userCreate
+     * @param ValidateInterface $validate
      * @param ResponseInterface $response
      * @param EventDispatcherInterface $dispatcher
      * @return Response
@@ -56,10 +63,17 @@ class UserController extends AbstractController
     public function store(
         Request $request,
         UserCreateInterface $userCreate,
+        ValidateInterface $validate,
         ResponseInterface $response,
         EventDispatcherInterface $dispatcher
     ) : Response
     {
+        $validatorBag = $validate->validate($request->request->all(), UserCreateConstraint::class, ['creating']);
+
+        if (!$validatorBag->isValid()) {
+            return $response->badRequest($validatorBag->getErrors());
+        }
+
         $user = $userCreate->create($request->request->all());
 
         $dispatcher->dispatch(UserCreatedEvent::NAME, new UserCreatedEvent($user));

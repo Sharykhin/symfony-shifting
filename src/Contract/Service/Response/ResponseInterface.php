@@ -43,4 +43,12 @@ interface ResponseInterface
      * @return Response
      */
     public function forbidden(string $error, array $warnings = null, array $meta = null) : Response;
+
+    /**
+     * @param $errors
+     * @param array|null $warnings
+     * @param array|null $meta
+     * @return Response
+     */
+    public function badRequest($errors, array $warnings = null, array $meta = null) : Response;
 }

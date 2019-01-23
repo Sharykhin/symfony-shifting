@@ -97,6 +97,26 @@ class JsonResponseService implements ResponseInterface
     }
 
     /**
+     * @param $errors
+     * @param array|null $warnings
+     * @param array|null $meta
+     * @return Response
+     */
+    public function badRequest($errors, array $warnings = null, array $meta = null): Response
+    {
+        if (is_string($errors)) {
+            $errors = ['message' => $errors];
+        }
+        /** @var ResponseSchema $schema */
+        $schema = $this->responseSchemaFactory->create();
+        $schema->warnings = $warnings;
+        $schema->meta = $meta;
+        $schema->errors = $errors;
+
+        return $this->sendResponse($schema, [], Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
      * @param ResponseSchema $schema
      * @param array $groups
      * @param int $statusCode
