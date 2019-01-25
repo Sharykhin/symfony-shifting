@@ -2,18 +2,21 @@
 
 namespace App\Controller\API;
 
-use App\Contract\Service\Validate\ValidateInterface;
-use App\Event\UserCreatedEvent;
-use App\Request\Constraint\User\UserCreateConstraint;
+use App\Request\Type\User\UserCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Request\Constraint\User\UserCreateConstraint;
+use App\Contract\Service\User\UserRetrieverInterface;
+use App\Contract\Service\Response\ResponseInterface;
+use App\Contract\Service\Validate\ValidateInterface;
+use App\Contract\Service\User\UserCreateInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use App\Contract\Service\User\UserRetrieverInterface;
-use App\Contract\Service\Response\ResponseInterface;
-use App\Contract\Service\User\UserCreateInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use App\ValueObject\ValidatorBag;
+use App\Event\UserCreatedEvent;
 
 /**
  * Class UserController
@@ -68,8 +71,11 @@ class UserController extends AbstractController
         EventDispatcherInterface $dispatcher
     ) : Response
     {
+        $userCreateType = new UserCreateType($request->request->all());
+
+        /** @var ValidatorBag $validatorBag */
         $validatorBag = $validate->validate(
-            $request->request->all(),
+            $userCreateType->toArray(),
             UserCreateConstraint::class,
             ['creating']
         );
@@ -78,13 +84,14 @@ class UserController extends AbstractController
             return $response->badRequest($validatorBag->getErrors());
         }
 
+        // TODO: think about whether it could be moved into validate service
         $user = $userRetriever->findByEmail($request->get('email'));
 
         if (!is_null($user)) {
             return $response->badRequest(['email' => $translator->trans('User with such email already exists')]);
         }
 
-        $user = $userCreate->create($request->request->all());
+        $user = $userCreate->create($userCreateType);
 
         $dispatcher->dispatch(UserCreatedEvent::NAME, new UserCreatedEvent($user));
 

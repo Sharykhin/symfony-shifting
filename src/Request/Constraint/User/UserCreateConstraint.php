@@ -28,6 +28,9 @@ class UserCreateConstraint extends AbstractConstrain
                 'last_name' => [
                     new Assert\NotBlank(['groups' => ['creating']])
                 ],
+                'activated' => [
+                    new Assert\Type(['groups' => ['updating'], 'type' => 'bool'])
+                ]
             ],
             'allowMissingFields' => false,
             'allowExtraFields' => false

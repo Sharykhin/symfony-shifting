@@ -11,10 +11,10 @@ use App\Request\Constraint\AbstractConstrain;
 use App\ValueObject\ValidatorBag;
 
 /**
- * Class ValidateService
+ * Class SymfonyValidateService
  * @package App\Service\Validate
  */
-class ValidateService implements ValidateInterface
+class SymfonyValidateService implements ValidateInterface
 {
     /** @var ValidatorInterface $validator */
     protected $validator;

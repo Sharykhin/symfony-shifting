@@ -3,6 +3,7 @@
 namespace App\ViewModel;
 
 use Symfony\Component\Serializer\Annotation\Groups;
+use DateTimeImmutable;
 
 /**
  * Class UserViewModel
@@ -30,6 +31,13 @@ class UserViewModel
      * @Groups({"public", "private"})
      */
     protected $email;
+
+    /**
+     * @var DateTimeImmutable|null $activated
+     *
+     * @Groups({"private"})
+     */
+    protected $activated;
 
     /**
      * @param int $id
@@ -86,5 +94,24 @@ class UserViewModel
     public function getEmail() : string
     {
         return $this->email;
+    }
+
+    /**
+     * @param DateTimeImmutable|null $dateTimeImmutable
+     * @return UserViewModel
+     */
+    public function setActivated(?DateTimeImmutable $dateTimeImmutable) : self
+    {
+        $this->activated = $dateTimeImmutable;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getActivated() : ?DateTimeImmutable
+    {
+        return $this->activated;
     }
 }

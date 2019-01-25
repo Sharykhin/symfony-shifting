@@ -7,6 +7,7 @@ use App\Contract\Factory\Entity\ReportFactoryInterface;
 use App\Contract\Factory\Entity\UserFactoryInterface;
 use App\Contract\Service\User\UserRetrieverInterface;
 use App\Contract\Service\User\UserCreateInterface;
+use App\Request\Type\User\UserCreateType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\ViewModel\UserViewModel;
 use App\Entity\Report;
@@ -49,7 +50,6 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $this->userFactory = $userFactory;
         $this->reportFactory = $reportFactory;
         $this->userViewModelFactory = $userViewModelFactory;
-
     }
 
     /**
@@ -70,6 +70,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $userViewModel->setId($user->getId());
         $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
         $userViewModel->setEmail($user->getEmail());
+        $userViewModel->setActivated($user->getActivated());
 
         return $userViewModel;
     }
@@ -92,22 +93,23 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $userViewModel->setId($user->getId());
         $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
         $userViewModel->setEmail($user->getEmail());
+        $userViewModel->setActivated($user->getActivated());
 
         return $userViewModel;
     }
 
     /**
-     * @param array $data
+     * @param UserCreateType $type
      * @return UserViewModel
-     * @throws \Exception
      */
-    public function create(array $data) : UserViewModel
+    public function create(UserCreateType $type) : UserViewModel
     {
         /** @var User $user */
         $user = $this->userFactory->create();
-        $user->setEmail($data['email']);
-        $user->setFirstName($data['first_name']);
-        $user->setLastName($data['last_name'] ?? null);
+        $user->setEmail($type->email);
+        $user->setFirstName($type->firstName);
+        $user->setLastName($type->lastName);
+        $user->setActivated($type->activated);
 
         $this->em->persist($user);
         /** @var Report $report */
@@ -124,6 +126,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $userViewModel->setId($user->getId());
         $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
         $userViewModel->setEmail($user->getEmail());
+        $userViewModel->setActivated($user->getActivated());
 
         return $userViewModel;
     }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -42,6 +43,11 @@ class User
      *
      */
     private $invoices;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $activated;
 
     /**
      * User constructor.
@@ -151,6 +157,25 @@ class User
                 $invoice->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getActivated(): ?DateTimeImmutable
+    {
+        return $this->activated;
+    }
+
+    /**
+     * @param DateTimeImmutable|null $activated
+     * @return User
+     */
+    public function setActivated(?DateTimeImmutable $activated): self
+    {
+        $this->activated = $activated;
 
         return $this;
     }

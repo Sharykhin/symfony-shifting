@@ -2,6 +2,7 @@
 
 namespace App\Contract\Service\User;
 
+use App\Request\Type\User\UserCreateType;
 use App\ViewModel\UserViewModel;
 
 /**
@@ -11,8 +12,8 @@ use App\ViewModel\UserViewModel;
 interface UserCreateInterface
 {
     /**
-     * @param array $data
+     * @param UserCreateType $userCreateType
      * @return UserViewModel
      */
-    public function create(array $data) : UserViewModel;
+    public function create(UserCreateType $userCreateType) : UserViewModel;
 }
