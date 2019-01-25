@@ -5,10 +5,10 @@ namespace App\Contract\Service\Invoice;
 use App\ViewModel\InvoiceViewModel;
 
 /**
- * Interface InvoiceCreateInterface
+ * Interface InvoiceRetrieverInterface
  * @package App\Contract\Service\Invoice
  */
-interface InvoiceCreateInterface
+interface InvoiceRetrieverInterface
 {
-    public function create(array $data) : InvoiceViewModel;
+    public function findById(int $id) : InvoiceViewModel;
 }

@@ -3,10 +3,10 @@
 namespace App\Contract;
 
 /**
- * Interface ToArrayInterface
+ * Interface ArrayableInterface
  * @package App\Contract
  */
-interface ToArrayInterface
+interface ArrayableInterface
 {
     /**
      * @return array

@@ -2,13 +2,13 @@
 
 namespace App\Request\Type;
 
-use App\Contract\ToArrayInterface;
+use App\Contract\ArrayableInterface;
 
 /**
  * Class AbstractType
  * @package App\Request\Type
  */
-abstract class AbstractType implements ToArrayInterface
+abstract class AbstractType implements ArrayableInterface
 {
     /**
      * @return array

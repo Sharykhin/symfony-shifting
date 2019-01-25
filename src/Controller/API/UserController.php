@@ -50,7 +50,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users", name="post_user", methods={"POST"})
+     * @Route("/users", name="post_users", methods={"POST"})
      *
      * @param Request $request
      * @param UserCreateInterface $userCreate
