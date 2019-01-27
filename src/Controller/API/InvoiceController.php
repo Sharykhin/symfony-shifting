@@ -29,6 +29,6 @@ class InvoiceController extends AbstractController
         $type = new InvoiceCreateType($request->request->all());
         $invoice = $invoiceCreator->create($type);
 
-        return $response->created(['message' => 'pong']);
+        return $response->created($invoice);
     }
 }

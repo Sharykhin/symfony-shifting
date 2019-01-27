@@ -5,6 +5,7 @@ namespace App\Factory;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -25,6 +26,7 @@ class AnnotationSerializerFactory implements SerializerFactoryInterface
      * @param array $encoders
      * @param ObjectNormalizer|null $normalizer
      * @return SerializerInterface
+     * @throws \Doctrine\Common\Annotations\AnnotationException
      */
     public function create(array $encoders = [], ObjectNormalizer $normalizer = null) : SerializerInterface
     {
@@ -47,7 +49,7 @@ class AnnotationSerializerFactory implements SerializerFactoryInterface
             new CamelCaseToSnakeCaseNameConverter()
         );
 
-        $serializer = new Serializer([$normalizer], $serializeEncoders);
+        $serializer = new Serializer([$normalizer, new DateTimeNormalizer()], $serializeEncoders);
 
         return $serializer;
     }
