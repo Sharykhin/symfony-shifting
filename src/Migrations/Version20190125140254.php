@@ -24,11 +24,11 @@ final class Version20190125140254 extends AbstractMigration
         CREATE PROCEDURE createOrUpdateReport(IN userId INT, IN dt DATE, IN amountVal DECIMAL(10,2))
         BEGIN
             DECLARE reportID int DEFAULT null;
-            SELECT id into reportID FROM reports where user_id=userId and `date`=dt FOR UPDATE;
+            SELECT id INTO reportID FROM reports where `user_id`=userId and `date`=dt FOR UPDATE;
             if reportID IS NULL THEN
                 INSERT INTO reports(`user_id`, `amount`, `date`) VALUES(userId, amountVal, dt);
             ELSE
-                UPDATE reports SET amount=amount + amountVal where id=reportID;
+                UPDATE reports SET `amount`=amount + amountVal WHERE `id`=reportID;
             END IF;
         END;
         ');
