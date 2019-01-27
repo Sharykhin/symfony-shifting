@@ -49,7 +49,7 @@ class AnnotationSerializerFactory implements SerializerFactoryInterface
             new CamelCaseToSnakeCaseNameConverter()
         );
 
-        $serializer = new Serializer([$normalizer, new DateTimeNormalizer()], $serializeEncoders);
+        $serializer = new Serializer([ new DateTimeNormalizer(), $normalizer], $serializeEncoders);
 
         return $serializer;
     }
