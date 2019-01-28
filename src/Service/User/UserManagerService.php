@@ -3,6 +3,7 @@
 namespace App\Service\User;
 
 use App\Contract\Factory\ViewModel\UserViewModelFactoryInterface;
+use App\Contract\Service\Serializer\SerializerInterface;
 use App\Contract\Factory\Entity\ReportFactoryInterface;
 use App\Contract\Factory\Entity\UserFactoryInterface;
 use App\Contract\Service\User\UserRetrieverInterface;
@@ -11,8 +12,8 @@ use App\Request\Type\User\UserCreateType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\ViewModel\UserViewModel;
 use App\Entity\Report;
+use DateTimeImmutable;
 use App\Entity\User;
-use DateTime;
 
 /**
  * Class UserManagerService
@@ -32,24 +33,30 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
     /** @var UserViewModelFactoryInterface $userViewModelFactory */
     protected $userViewModelFactory;
 
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
     /**
      * UserManagerService constructor.
      * @param EntityManagerInterface $em
      * @param UserFactoryInterface $userFactory
      * @param ReportFactoryInterface $reportFactory
      * @param UserViewModelFactoryInterface $userViewModelFactory
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         EntityManagerInterface $em,
         UserFactoryInterface $userFactory,
         ReportFactoryInterface $reportFactory,
-        UserViewModelFactoryInterface $userViewModelFactory
+        UserViewModelFactoryInterface $userViewModelFactory,
+        SerializerInterface $serializer
     )
     {
         $this->em = $em;
         $this->userFactory = $userFactory;
         $this->reportFactory = $reportFactory;
         $this->userViewModelFactory = $userViewModelFactory;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -65,14 +72,9 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
             return null;
         }
 
-        /** @var UserViewModel $userViewModel */
-        $userViewModel = $this->userViewModelFactory->create();
-        $userViewModel->setId($user->getId());
-        $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
-        $userViewModel->setEmail($user->getEmail());
-        $userViewModel->setActivated($user->getActivated());
-
-        return $userViewModel;
+        return $this->userViewModelFactory->create(
+            $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated'])
+        );
     }
 
     /**
@@ -88,14 +90,9 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
             return null;
         }
 
-        /** @var UserViewModel $userViewModel */
-        $userViewModel = $this->userViewModelFactory->create();
-        $userViewModel->setId($user->getId());
-        $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
-        $userViewModel->setEmail($user->getEmail());
-        $userViewModel->setActivated($user->getActivated());
-
-        return $userViewModel;
+        return $this->userViewModelFactory->create(
+            $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated'])
+        );
     }
 
     /**
@@ -116,18 +113,13 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $report = $this->reportFactory->create();
         $report->setUser($user);
         $report->setAmount(0.00);
-        $report->setDate(new DateTime('now'));
+        $report->setDate(new DateTimeImmutable('now'));
         $this->em->persist($report);
 
         $this->em->flush();
 
-        /** @var UserViewModel $userViewModel */
-        $userViewModel = $this->userViewModelFactory->create();
-        $userViewModel->setId($user->getId());
-        $userViewModel->setFullName(trim($user->getFirstName() . ' ' . $user->getLastName()));
-        $userViewModel->setEmail($user->getEmail());
-        $userViewModel->setActivated($user->getActivated());
-
-        return $userViewModel;
+        return $this->userViewModelFactory->create(
+            $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated'])
+        );
     }
 }

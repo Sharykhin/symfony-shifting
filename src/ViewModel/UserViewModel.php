@@ -40,14 +40,20 @@ class UserViewModel
     protected $activated;
 
     /**
-     * @param int $id
-     * @return UserViewModel
+     * UserViewModel constructor.
+     * @param $data
      */
-    public function setId(int $id) : self
+    public function __construct($data)
     {
-        $this->id = $id;
+        $this->id = $data['id'];
+        $this->email = $data['email'];
+        $this->fullName = $data['full_name'];
+        if (isset($data['activated']) && is_string($data['activated'])) {
+            $this->activated = new DateTimeImmutable($data['activated']);
+        } else {
+            $this->activated = $data['activated'] ?? null;
+        }
 
-        return $this;
     }
 
     /**
@@ -59,17 +65,6 @@ class UserViewModel
     }
 
     /**
-     * @param string $fullName
-     * @return UserViewModel
-     */
-    public function setFullName(string $fullName) : self
-    {
-        $this->fullName = $fullName;
-
-        return $this;
-    }
-
-    /**
      * @return null|string
      */
     public function getFullName() : string
@@ -77,16 +72,6 @@ class UserViewModel
         return $this->fullName;
     }
 
-    /**
-     * @param string $email
-     * @return UserViewModel
-     */
-    public function setEmail(string $email) : self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
 
     /**
      * @return string
@@ -94,17 +79,6 @@ class UserViewModel
     public function getEmail() : string
     {
         return $this->email;
-    }
-
-    /**
-     * @param DateTimeImmutable|null $dateTimeImmutable
-     * @return UserViewModel
-     */
-    public function setActivated(?DateTimeImmutable $dateTimeImmutable) : self
-    {
-        $this->activated = $dateTimeImmutable;
-
-        return $this;
     }
 
     /**

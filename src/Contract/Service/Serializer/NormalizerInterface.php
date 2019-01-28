@@ -10,8 +10,8 @@ interface NormalizerInterface
 {
     /**
      * @param $object
-     * @param array $context
-     * @return mixed
+     * @param array $attributes
+     * @return array
      */
-    public function normalize($object, array $context = array());
+    public function normalize($object, array $attributes = []): array;
 }

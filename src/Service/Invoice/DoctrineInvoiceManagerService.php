@@ -66,8 +66,8 @@ class DoctrineInvoiceManagerService implements InvoiceCreatorInterface, InvoiceR
 
         return $this->viewModelFactory->create($this->serializer->normalize(
             $invoice,
-            ['attributes' => ['id', 'amount', 'comment', 'createdAt']])
-        );
+            ['id', 'amount', 'comment', 'createdAt']
+        ));
     }
 
     /**
@@ -108,7 +108,7 @@ class DoctrineInvoiceManagerService implements InvoiceCreatorInterface, InvoiceR
 
         return $this->viewModelFactory->create($this->serializer->normalize(
             $invoice,
-            ['attributes' => ['id', 'amount', 'comment', 'createdAt']]
+            ['id', 'amount', 'comment', 'createdAt']
         ));
     }
 }

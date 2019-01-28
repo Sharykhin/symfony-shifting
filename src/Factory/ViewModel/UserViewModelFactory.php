@@ -12,10 +12,13 @@ use App\ViewModel\UserViewModel;
 class UserViewModelFactory implements UserViewModelFactoryInterface
 {
     /**
+     * @param array $data
      * @return UserViewModel
      */
-    public function create() : UserViewModel
+    public function create(array $data) : UserViewModel
     {
-        return new UserViewModel();
+        $data['full_name'] = trim($data['first_name'] . ' ' . $data['last_name']);
+
+        return new UserViewModel($data);
     }
 }

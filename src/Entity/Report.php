@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReportRepository")
@@ -62,12 +63,12 @@ class Report
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeImmutable $date): self
     {
         $this->date = $date;
 

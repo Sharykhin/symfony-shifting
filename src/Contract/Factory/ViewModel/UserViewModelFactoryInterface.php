@@ -11,7 +11,8 @@ use App\ViewModel\UserViewModel;
 interface UserViewModelFactoryInterface
 {
     /**
+     * @param array $data
      * @return UserViewModel
      */
-    public function create() : UserViewModel;
+    public function create(array $data) : UserViewModel;
 }
