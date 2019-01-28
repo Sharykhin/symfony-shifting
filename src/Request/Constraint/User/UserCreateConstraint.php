@@ -23,10 +23,12 @@ class UserCreateConstraint extends AbstractConstrain
                     new Assert\Email(['groups' => ['creating']]),
                 ],
                 'first_name' => [
-                    new Assert\NotBlank(['groups' => ['creating']])
+                    new Assert\NotBlank(['groups' => ['creating']]),
+                    new Assert\Type(['groups' => ['creating'], 'type' => 'string']),
                 ],
                 'last_name' => [
-                    new Assert\NotBlank(['groups' => ['creating']])
+                    new Assert\NotBlank(['groups' => ['creating']]),
+                    new Assert\Type(['groups' => ['creating'], 'type' => 'string']),
                 ],
                 'activated' => [
                     new Assert\Type(['groups' => ['updating'], 'type' => 'bool'])
