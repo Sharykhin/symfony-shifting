@@ -40,14 +40,19 @@ class InvoiceViewModel
     protected $createdAt;
 
     /**
-     * @param int $id
-     * @return InvoiceViewModel
+     * InvoiceViewModel constructor.
+     * @param array $data
      */
-    public function setId(int $id) : self
+    public function __construct(array $data)
     {
-        $this->id = $id;
-
-        return $this;
+        $this->id = $data['id'];
+        $this->amount = $data['amount'];
+        $this->comment = $data['comment'];
+        if (isset($data['created_at']) && is_string($data['created_at'])) {
+            $this->createdAt = new DateTimeImmutable($data['created_at']);
+        } else {
+            $this->createdAt = new DateTimeImmutable('now');
+        }
     }
 
     /**
@@ -59,17 +64,6 @@ class InvoiceViewModel
     }
 
     /**
-     * @param float $amount
-     * @return InvoiceViewModel
-     */
-    public function setAmount(float $amount) : self
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    /**
      * @return float
      */
     public function getAmount() : float
@@ -78,33 +72,11 @@ class InvoiceViewModel
     }
 
     /**
-     * @param string|null $comment
-     * @return $this
-     */
-    public function setComment(string $comment = null)
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
-    /**
      * @return string|null
      */
     public function getComment() : ?string
     {
         return $this->comment;
-    }
-
-    /**
-     * @param DateTimeImmutable $createdAt
-     * @return InvoiceViewModel
-     */
-    public function setCreatedAt(DateTimeImmutable $createdAt) : self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     /**

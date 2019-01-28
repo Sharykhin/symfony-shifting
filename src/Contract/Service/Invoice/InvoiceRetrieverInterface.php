@@ -10,5 +10,5 @@ use App\ViewModel\InvoiceViewModel;
  */
 interface InvoiceRetrieverInterface
 {
-    public function findById(int $id) : InvoiceViewModel;
+    public function findById(int $id): ?InvoiceViewModel;
 }

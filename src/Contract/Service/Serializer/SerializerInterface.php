@@ -6,7 +6,7 @@ namespace App\Contract\Service\Serializer;
  * Interface SerializerInterface
  * @package App\Contract\Serializer
  */
-interface SerializerInterface
+interface SerializerInterface extends NormalizerInterface
 {
     /**
      * @param $data

@@ -11,7 +11,8 @@ use App\ViewModel\InvoiceViewModel;
 interface InvoiceViewModelFactoryInterface
 {
     /**
+     * @param array $data
      * @return InvoiceViewModel
      */
-    public function create() : InvoiceViewModel;
+    public function create(array $data) : InvoiceViewModel;
 }

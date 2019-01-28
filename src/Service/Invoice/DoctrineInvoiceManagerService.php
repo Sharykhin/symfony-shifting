@@ -2,44 +2,72 @@
 
 namespace App\Service\Invoice;
 
-use App\Contract\Factory\Entity\InvoiceFactoryInterface;
-use App\Contract\Factory\Entity\ReportFactoryInterface;
 use App\Contract\Factory\ViewModel\InvoiceViewModelFactoryInterface;
-use App\Contract\Service\Invoice\InvoiceCreatorInterface;
 use App\Contract\Service\Invoice\InvoiceRetrieverInterface;
-use App\Entity\User;
+use App\Contract\Service\Invoice\InvoiceCreatorInterface;
+use App\Contract\Factory\Entity\InvoiceFactoryInterface;
+use App\Contract\Service\Serializer\SerializerInterface;
 use App\Request\Type\Invoice\InvoiceCreateType;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use App\ViewModel\InvoiceViewModel;
+use App\Entity\Invoice;
+use DateTimeImmutable;
+use App\Entity\User;
 use Exception;
 
+/**
+ * Class DoctrineInvoiceManagerService
+ * @package App\Service\Invoice
+ */
 class DoctrineInvoiceManagerService implements InvoiceCreatorInterface, InvoiceRetrieverInterface
 {
+    /** @var EntityManagerInterface $em */
     protected $em;
 
+    /** @var InvoiceFactoryInterface $invoiceFactory */
     protected $invoiceFactory;
 
-    protected $reportFactory;
-
+    /** @var InvoiceViewModelFactoryInterface $viewModelFactory */
     protected $viewModelFactory;
 
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
+    /**
+     * DoctrineInvoiceManagerService constructor.
+     * @param EntityManagerInterface $em
+     * @param InvoiceFactoryInterface $invoiceFactory
+     * @param InvoiceViewModelFactoryInterface $viewModelFactory
+     * @param SerializerInterface $serializer
+     */
     public function __construct(
         EntityManagerInterface $em,
         InvoiceFactoryInterface $invoiceFactory,
-        ReportFactoryInterface $reportFactory,
-        InvoiceViewModelFactoryInterface $viewModelFactory
+        InvoiceViewModelFactoryInterface $viewModelFactory,
+        SerializerInterface $serializer
     )
     {
         $this->em = $em;
         $this->invoiceFactory = $invoiceFactory;
-        $this->reportFactory = $reportFactory;
         $this->viewModelFactory = $viewModelFactory;
+        $this->serializer = $serializer;
     }
 
-    public function findById(int $id): InvoiceViewModel
+    /**
+     * @param int $id
+     * @return InvoiceViewModel|null
+     */
+    public function findById(int $id): ?InvoiceViewModel
     {
-        // TODO: Implement findById() method.
+        $invoice = $this->em->getRepository(Invoice::class)->find($id);
+        if (is_null($invoice)) {
+            return null;
+        }
+
+        return $this->viewModelFactory->create($this->serializer->normalize(
+            $invoice,
+            ['attributes' => ['id', 'amount', 'comment', 'createdAt']])
+        );
     }
 
     /**
@@ -78,12 +106,9 @@ class DoctrineInvoiceManagerService implements InvoiceCreatorInterface, InvoiceR
             throw $exception;
         }
 
-        $invoiceViewModel = $this->viewModelFactory->create();
-        $invoiceViewModel->setId($invoice->getId());
-        $invoiceViewModel->setAmount($invoice->getAmount());
-        $invoiceViewModel->setComment($invoice->getComment());
-        $invoiceViewModel->setCreatedAt($date);
-
-        return $invoiceViewModel;
+        return $this->viewModelFactory->create($this->serializer->normalize(
+            $invoice,
+            ['attributes' => ['id', 'amount', 'comment', 'createdAt']]
+        ));
     }
 }

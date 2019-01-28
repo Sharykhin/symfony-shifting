@@ -12,10 +12,11 @@ use App\ViewModel\InvoiceViewModel;
 class InvoiceViewModelFactory implements InvoiceViewModelFactoryInterface
 {
     /**
+     * @param array $data
      * @return InvoiceViewModel
      */
-    public function create() : InvoiceViewModel
+    public function create(array $data) : InvoiceViewModel
     {
-        return new InvoiceViewModel();
+        return new InvoiceViewModel($data);
     }
 }

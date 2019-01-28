@@ -38,6 +38,16 @@ class JsonSerializerService implements SerializerInterface
             'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS
         ], $context));
     }
+
+    /**
+     * @param $object
+     * @param array $context
+     * @return array|bool|float|int|mixed|string
+     */
+    public function normalize($object, array $context = array())
+    {
+        return $this->serializer->normalize($object, 'array', $context);
+    }
 }
 
 

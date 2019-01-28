@@ -24,11 +24,10 @@ class AnnotationSerializerFactory implements SerializerFactoryInterface
 
     /**
      * @param array $encoders
-     * @param ObjectNormalizer|null $normalizer
+     * @param array $normalizers
      * @return SerializerInterface
-     * @throws \Doctrine\Common\Annotations\AnnotationException
      */
-    public function create(array $encoders = [], ObjectNormalizer $normalizer = null) : SerializerInterface
+    public function create(array $encoders = [], array $normalizers = []) : SerializerInterface
     {
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $serializeEncoders = [];
@@ -44,12 +43,14 @@ class AnnotationSerializerFactory implements SerializerFactoryInterface
             }
         }
 
-        $normalizer = $normalizer ?: new ObjectNormalizer(
-            $classMetadataFactory,
-            new CamelCaseToSnakeCaseNameConverter()
-        );
+        if (empty($normalizers)) {
+            $normalizers = [
+                new DateTimeNormalizer(),
+                new ObjectNormalizer($classMetadataFactory, new CamelCaseToSnakeCaseNameConverter())
+            ];
+        }
 
-        $serializer = new Serializer([ new DateTimeNormalizer(), $normalizer], $serializeEncoders);
+        $serializer = new Serializer($normalizers, $serializeEncoders);
 
         return $serializer;
     }
