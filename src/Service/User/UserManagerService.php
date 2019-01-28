@@ -72,9 +72,11 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
             return null;
         }
 
-        return $this->userViewModelFactory->create(
-            $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated'])
-        );
+        $userArray = $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated']);
+        $userArray['invoices'] = 0;
+        $userArray['total_amount'] = 0;
+
+        return $this->userViewModelFactory->create($userArray);
     }
 
     /**
@@ -90,9 +92,11 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
             return null;
         }
 
-        return $this->userViewModelFactory->create(
-            $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated'])
-        );
+        $userArray = $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated']);
+        $userArray['invoices'] = 0;
+        $userArray['total_amount'] = 0;
+
+        return $this->userViewModelFactory->create($userArray);
     }
 
     /**
@@ -118,8 +122,10 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
 
         $this->em->flush();
 
-        return $this->userViewModelFactory->create(
-            $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated'])
-        );
+        $userArray = $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated']);
+        $userArray['invoices'] = 0;
+        $userArray['total_amount'] = 0;
+
+        return $this->userViewModelFactory->create($userArray);
     }
 }

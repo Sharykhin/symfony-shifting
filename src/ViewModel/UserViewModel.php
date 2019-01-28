@@ -21,7 +21,7 @@ class UserViewModel
     /**
      * @var string $fullName
      *
-     * @Groups({"private"})
+     * @Groups({"public", "private"})
      */
     protected $fullName;
 
@@ -40,6 +40,20 @@ class UserViewModel
     protected $activated;
 
     /**
+     * @var int $invoices
+     *
+     * @Groups({"public", "private"})
+     */
+    protected $invoices;
+
+    /**
+     * @var float $totalAmount
+     *
+     * @Groups({"public", "private"})
+     */
+    protected $totalAmount;
+
+    /**
      * UserViewModel constructor.
      * @param $data
      */
@@ -54,12 +68,14 @@ class UserViewModel
             $this->activated = $data['activated'] ?? null;
         }
 
+        $this->invoices = $data['invoices'];
+        $this->totalAmount = $data['total_amount'];
     }
 
     /**
      * @return int|null
      */
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -67,7 +83,7 @@ class UserViewModel
     /**
      * @return null|string
      */
-    public function getFullName() : string
+    public function getFullName(): string
     {
         return $this->fullName;
     }
@@ -76,7 +92,7 @@ class UserViewModel
     /**
      * @return string
      */
-    public function getEmail() : string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -84,8 +100,24 @@ class UserViewModel
     /**
      * @return DateTimeImmutable|null
      */
-    public function getActivated() : ?DateTimeImmutable
+    public function getActivated(): ?DateTimeImmutable
     {
         return $this->activated;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInvoices(): int
+    {
+        return $this->invoices;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalAmount(): float
+    {
+        return $this->totalAmount;
     }
 }

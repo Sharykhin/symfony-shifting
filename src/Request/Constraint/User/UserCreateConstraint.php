@@ -20,6 +20,7 @@ class UserCreateConstraint extends AbstractConstrain
             'groups' => ['creating', 'updating'],
             'fields' => [
                 'email' => [
+                    new Assert\NotBlank(['groups' => ['creating']]),
                     new Assert\Email(['groups' => ['creating']]),
                 ],
                 'first_name' => [
