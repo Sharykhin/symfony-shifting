@@ -18,7 +18,7 @@ interface UserRetrieverInterface
 
     /**
      * @param string $email
-     * @return UserViewModel|null
+     * @return bool
      */
-    public function findByEmail(string $email) : ?UserViewModel;
+    public function existsEmail(string $email): bool;
 }

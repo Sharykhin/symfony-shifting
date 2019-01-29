@@ -84,10 +84,7 @@ class UserController extends AbstractController
             return $response->badRequest($validatorBag->getErrors());
         }
 
-        // TODO: think about whether it could be moved into validate service
-        $user = $userRetriever->findByEmail($request->get('email'));
-
-        if (!is_null($user)) {
+        if ($userRetriever->existsEmail($request->get('email'))) {
             return $response->badRequest(['email' => $translator->trans('User with such email already exists')]);
         }
 

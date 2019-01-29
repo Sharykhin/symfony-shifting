@@ -3,7 +3,6 @@
 namespace App\Service\User;
 
 use App\Contract\Factory\ViewModel\UserViewModelFactoryInterface;
-use App\Contract\Service\Serializer\SerializerInterface;
 use App\Contract\Factory\Entity\ReportFactoryInterface;
 use App\Contract\Factory\Entity\UserFactoryInterface;
 use App\Contract\Service\User\UserRetrieverInterface;
@@ -33,30 +32,24 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
     /** @var UserViewModelFactoryInterface $userViewModelFactory */
     protected $userViewModelFactory;
 
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
     /**
      * UserManagerService constructor.
      * @param EntityManagerInterface $em
      * @param UserFactoryInterface $userFactory
      * @param ReportFactoryInterface $reportFactory
      * @param UserViewModelFactoryInterface $userViewModelFactory
-     * @param SerializerInterface $serializer
      */
     public function __construct(
         EntityManagerInterface $em,
         UserFactoryInterface $userFactory,
         ReportFactoryInterface $reportFactory,
-        UserViewModelFactoryInterface $userViewModelFactory,
-        SerializerInterface $serializer
+        UserViewModelFactoryInterface $userViewModelFactory
     )
     {
         $this->em = $em;
         $this->userFactory = $userFactory;
         $this->reportFactory = $reportFactory;
         $this->userViewModelFactory = $userViewModelFactory;
-        $this->serializer = $serializer;
     }
 
     /**
@@ -65,38 +58,26 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
      */
     public function findById(int $userId): ?UserViewModel
     {
-        /** @var User|null $user */
-        $user = $this->em->getRepository(User::class)->find($userId);
 
-        if (is_null($user)) {
+        $userInvoiceAggregated = $this->em->getRepository(User::class)->findOneWithTotalInvoices($userId);
+
+        if (is_null($userInvoiceAggregated)) {
             return null;
         }
 
-        $userArray = $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated']);
-        $userArray['invoices'] = 0;
-        $userArray['total_amount'] = 0;
-
-        return $this->userViewModelFactory->create($userArray);
+        return $this->userViewModelFactory->create((array) $userInvoiceAggregated);
     }
 
     /**
      * @param string $email
-     * @return UserViewModel|null
+     * @return bool
      */
-    public function findByEmail(string $email): ?UserViewModel
+    public function existsEmail(string $email): bool
     {
         /** @var User|null $user */
         $user = $this->em->getRepository(User::class)->findOneByEmail($email);
 
-        if (is_null($user)) {
-            return null;
-        }
-
-        $userArray = $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated']);
-        $userArray['invoices'] = 0;
-        $userArray['total_amount'] = 0;
-
-        return $this->userViewModelFactory->create($userArray);
+        return boolval($user);
     }
 
     /**
@@ -122,10 +103,8 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
 
         $this->em->flush();
 
-        $userArray = $this->serializer->normalize($user, ['id', 'email', 'firstName', 'lastName', 'activated']);
-        $userArray['invoices'] = 0;
-        $userArray['total_amount'] = 0;
+        $userInvoiceAggregated = $this->em->getRepository(User::class)->findOneWithTotalInvoices($user->getId());
 
-        return $this->userViewModelFactory->create($userArray);
+        return $this->userViewModelFactory->create((array) $userInvoiceAggregated);
     }
 }

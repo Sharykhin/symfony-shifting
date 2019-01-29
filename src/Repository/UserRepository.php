@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\User;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +47,34 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param int $userId
+     * @return null|object
+     */
+    public function findOneWithTotalInvoices(int $userId): ?object
+    {
+        $result = $this->createQueryBuilder('u')
+            ->select(
+                'u.id',
+                'u.email',
+                'u.firstName',
+                'u.lastName',
+                'u.activated',
+                'COUNT(i.id) as totalNumber',
+                'SUM(i.amount) as totalAmount'
+            )
+            ->leftJoin('u.invoices', 'i')
+            ->andWhere('u.id = :userId')
+            ->addGroupBy('u.id')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (is_null($result)) {
+            return null;
+        }
+
+        return (object) $result;
+    }
 }

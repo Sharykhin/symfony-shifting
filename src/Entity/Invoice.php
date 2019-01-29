@@ -20,7 +20,7 @@ class Invoice
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="invoices")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
 

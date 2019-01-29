@@ -47,17 +47,17 @@ class UserViewModel
     protected $invoices;
 
     /**
-     * @var float $totalAmount
+     * @var float $amount
      *
      * @Groups({"public", "private"})
      */
-    protected $totalAmount;
+    protected $amount;
 
     /**
      * UserViewModel constructor.
      * @param $data
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->id = $data['id'];
         $this->email = $data['email'];
@@ -68,8 +68,8 @@ class UserViewModel
             $this->activated = $data['activated'] ?? null;
         }
 
-        $this->invoices = $data['invoices'];
-        $this->totalAmount = $data['total_amount'];
+        $this->invoices = $data['totalNumber'] ?? 0;
+        $this->amount = $data['totalAmount'] ?? 0;
     }
 
     /**
@@ -116,8 +116,8 @@ class UserViewModel
     /**
      * @return float
      */
-    public function getTotalAmount(): float
+    public function getAmount(): float
     {
-        return $this->totalAmount;
+        return $this->amount;
     }
 }
