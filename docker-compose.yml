@@ -87,3 +87,19 @@ services:
     depends_on:
       - invoicer-php
       - invoicer-rabbitmq
+
+  invoicer-swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: invoicer-swagger-editor
+    ports:
+      - 8006:8080
+
+  invoicer-swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: invoicer-swagger-ui
+    volumes:
+      - .:/tmp
+    environment:
+      - SWAGGER_JSON=/tmp/swagger.json
+    ports:
+      - 8007:8080
