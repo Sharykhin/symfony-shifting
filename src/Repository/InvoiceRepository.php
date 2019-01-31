@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Invoice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\Invoice;
 
 /**
  * @method Invoice|null find($id, $lockMode = null, $lockVersion = null)

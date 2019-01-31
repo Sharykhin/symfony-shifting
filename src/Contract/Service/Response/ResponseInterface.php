@@ -17,7 +17,7 @@ interface ResponseInterface
      * @param array $groups
      * @return Response
      */
-    public function success($data, array $warnings = null, array $meta = null, array $groups = []) : Response;
+    public function success($data, array $warnings = null, array $meta = null, array $groups = []): Response;
 
     /**
      * @param $data
@@ -26,7 +26,7 @@ interface ResponseInterface
      * @param array $groups
      * @return Response
      */
-    public function created($data, array $warnings = null, array $meta = null, array $groups = []) : Response;
+    public function created($data, array $warnings = null, array $meta = null, array $groups = []): Response;
 
     /**
      * @param string $error
@@ -34,7 +34,7 @@ interface ResponseInterface
      * @param array|null $meta
      * @return Response
      */
-    public function notFound(string $error, array $warnings = null, array $meta = null) : Response;
+    public function notFound(string $error, array $warnings = null, array $meta = null): Response;
 
     /**
      * @param string $error
@@ -42,7 +42,7 @@ interface ResponseInterface
      * @param array|null $meta
      * @return Response
      */
-    public function forbidden(string $error, array $warnings = null, array $meta = null) : Response;
+    public function forbidden(string $error, array $warnings = null, array $meta = null): Response;
 
     /**
      * @param $errors
@@ -50,5 +50,12 @@ interface ResponseInterface
      * @param array|null $meta
      * @return Response
      */
-    public function badRequest($errors, array $warnings = null, array $meta = null) : Response;
+    public function badRequest($errors, array $warnings = null, array $meta = null): Response;
+
+    /**
+     * @param $errors
+     * @param int $code
+     * @return Response
+     */
+    public function error($errors, int $code = Response::HTTP_INTERNAL_SERVER_ERROR): Response;
 }

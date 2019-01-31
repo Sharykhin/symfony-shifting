@@ -26,14 +26,24 @@ docker-compose build
 docker-compose up
 ```
 
-4. Install project dependencies:
-```bash
-docker-compose exec invoicer-php composer install
-```
+When it run, it will automatically run installing composer dependencies, so for 
+the first time it may time a couple of minutes.
 
-5. Open browser on [http://localhost:8000](http://localhost:8000) to check whether
+4. Open browser on [http://localhost:8000/ping](http://localhost:8000/ping) to check whether
 everything works as expected.
 
 #### PHPUnit Code Coverage
 
 To see phpunit code coverage open browser on [http://localhost:8005](http://localhost:8005)
+
+#### MailDev Dashboard
+
+In development mode MailDev is in use for sending mails. Dashboard is available by 
+the following link [http://localhost:1080](http://localhost:1080)
+
+
+#### RabbitMQ Dashboard
+
+By default RabbitMQ is in use for a queue engine. Dashboard is available by the 
+ following link [http://localhost:8080](http://localhost:8080), credentials: *guest*/*guest*
+ 

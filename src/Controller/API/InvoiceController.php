@@ -2,17 +2,18 @@
 
 namespace App\Controller\API;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Request\Constraint\Invoice\InvoiceCreateConstraint;
+use App\Contract\Service\Invoice\InvoiceRetrieverInterface;
 use App\Contract\Service\Invoice\InvoiceCreatorInterface;
 use App\Contract\Service\Validate\ValidateInterface;
-use App\Request\Constraint\Invoice\InvoiceCreateConstraint;
-use App\Request\Type\Invoice\InvoiceCreateType;
-use App\ValueObject\ValidatorBag;
-use App\ViewModel\InvoiceViewModel;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Contract\Service\Response\ResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Request\Type\Invoice\InvoiceCreateType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use App\ViewModel\InvoiceViewModel;
+use App\ValueObject\ValidatorBag;
 
 /**
  * Class InvoiceController
@@ -20,6 +21,36 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class InvoiceController extends AbstractController
 {
+
+    /**
+     * @Route("/invoices", name="get_invoices", methods={"GET"})
+     *
+     * @param Request $request
+     * @param ResponseInterface $response
+     * @param InvoiceRetrieverInterface $invoiceRetriever
+     * @return Response
+     */
+    public function index(
+        Request $request,
+        ResponseInterface $response,
+        InvoiceRetrieverInterface $invoiceRetriever
+    ): Response
+    {
+        $limit = $request->query->get('limit', 10);
+        $offset = $request->query->get('offset', 0);
+
+        $orderBy = json_decode($request->query->get('order'), true);
+
+        $invoices = $invoiceRetriever->getList([], $orderBy, $limit, $offset);
+
+        return $response->success($invoices, null, [
+            'limit' => $limit,
+            'offset' => $offset,
+            'order' => $orderBy,
+            'count' => sizeof($invoices)
+        ]);
+    }
+
     /**
      * @Route("/invoices", name="post_invoices", methods={"POST"})
      *
@@ -34,7 +65,7 @@ class InvoiceController extends AbstractController
         InvoiceCreatorInterface $invoiceCreator,
         ValidateInterface $validate,
         ResponseInterface $response
-    ) : Response
+    ): Response
     {
         $type = new InvoiceCreateType($request->request->all());
         /** @var ValidatorBag $validatorBag */

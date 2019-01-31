@@ -58,7 +58,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
      */
     public function findById(int $userId): ?UserViewModel
     {
-
+        /** @var object $userInvoiceAggregated */
         $userInvoiceAggregated = $this->em->getRepository(User::class)->findOneWithTotalInvoices($userId);
 
         if (is_null($userInvoiceAggregated)) {
@@ -98,6 +98,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $report = $this->reportFactory->create();
         $report->setUser($user);
         $report->setAmount(0.00);
+        // TODO: think about how to mock this new DateTimeImmutable('now')
         $report->setDate(new DateTimeImmutable('now'));
         $this->em->persist($report);
 

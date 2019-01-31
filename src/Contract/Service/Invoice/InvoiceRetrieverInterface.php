@@ -10,5 +10,18 @@ use App\ViewModel\InvoiceViewModel;
  */
 interface InvoiceRetrieverInterface
 {
+    /**
+     * @param int $id
+     * @return InvoiceViewModel|null
+     */
     public function findById(int $id): ?InvoiceViewModel;
+
+    /**
+     * @param array $criteria
+     * @param array|null|null $orderBy
+     * @param null $limit
+     * @param null $offset
+     * @return array
+     */
+    public function getList(array $criteria = [], ?array $orderBy = null, $limit = null, $offset = null): array;
 }

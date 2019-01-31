@@ -117,6 +117,24 @@ class JsonResponseService implements ResponseInterface
     }
 
     /**
+     * @param $errors
+     * @param int $code
+     * @return Response
+     */
+    public function error($errors, int $code = Response::HTTP_INTERNAL_SERVER_ERROR): Response
+    {
+        if (is_string($errors)) {
+            $errors = ['message' => $errors];
+        }
+
+        /** @var ResponseSchema $schema */
+        $schema = $this->responseSchemaFactory->create();
+        $schema->errors = $errors;
+
+        return $this->sendResponse($schema, [], $code);
+    }
+
+    /**
      * @param ResponseSchema $schema
      * @param array $groups
      * @param int $statusCode
