@@ -70,6 +70,15 @@ class DoctrineInvoiceManagerService implements InvoiceCreatorInterface, InvoiceR
     }
 
     /**
+     * @param array $criteria
+     * @return int
+     */
+    public function count(array $criteria = []): int
+    {
+        return $this->em->getRepository(Invoice::class)->count($criteria);
+    }
+
+    /**
      * @param int $id
      * @return InvoiceViewModel|null
      */

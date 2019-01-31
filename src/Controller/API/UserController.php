@@ -2,10 +2,8 @@
 
 namespace App\Controller\API;
 
-use App\Request\Type\User\UserCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Request\Constraint\User\UserCreateConstraint;
 use App\Contract\Service\User\UserRetrieverInterface;
@@ -15,7 +13,9 @@ use App\Contract\Service\User\UserCreateInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use App\Request\Type\User\UserCreateType;
 use App\ValueObject\ValidatorBag;
+use App\ViewModel\UserViewModel;
 use App\Event\UserCreatedEvent;
 
 /**
@@ -40,6 +40,7 @@ class UserController extends AbstractController
         int $userId
     ) : Response
     {
+        /** @var UserViewModel $user */
         $user = $userRetriever->findById($userId);
 
         if (is_null($user)) {

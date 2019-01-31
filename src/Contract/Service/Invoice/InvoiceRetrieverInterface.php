@@ -24,4 +24,10 @@ interface InvoiceRetrieverInterface
      * @return array
      */
     public function getList(array $criteria = [], ?array $orderBy = null, $limit = null, $offset = null): array;
+
+    /**
+     * @param array $criteria
+     * @return int
+     */
+    public function count(array $criteria = []): int;
 }

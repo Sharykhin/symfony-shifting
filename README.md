@@ -47,3 +47,10 @@ the following link [http://localhost:1080](http://localhost:1080)
 By default RabbitMQ is in use for a queue engine. Dashboard is available by the 
  following link [http://localhost:8080](http://localhost:8080), credentials: *guest*/*guest*
  
+#### Endpoints Usage:
+There are three predefined query parameters:
+- *_locale* - `en|ru`, `en` by default set the locale of request
+- *_debug* - `true|false`, `false` by default. If it is true response will contain
+    `_debug` field with all sql queries
+- *_mode* - `dev|prod`, `dev` by default. Switches environment mode. So you can check 
+some behaviour like on production mode.

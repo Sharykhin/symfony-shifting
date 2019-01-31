@@ -36,18 +36,20 @@ class InvoiceController extends AbstractController
         InvoiceRetrieverInterface $invoiceRetriever
     ): Response
     {
-        $limit = $request->query->get('limit', 10);
-        $offset = $request->query->get('offset', 0);
-
+        $limit = (int) $request->query->get('limit', 10);
+        $offset = (int) $request->query->get('offset', 0);
         $orderBy = json_decode($request->query->get('order'), true);
 
+
         $invoices = $invoiceRetriever->getList([], $orderBy, $limit, $offset);
+        $total = $invoiceRetriever->count();
 
         return $response->success($invoices, null, [
             'limit' => $limit,
             'offset' => $offset,
             'order' => $orderBy,
-            'count' => sizeof($invoices)
+            'count' => sizeof($invoices),
+            'total' => $total,
         ]);
     }
 
