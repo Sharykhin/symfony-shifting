@@ -1,0 +1,81 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Invoice aggregator service",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://dev.ms.rockspoon.com/v1/customer",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "users",
+      "description": "Eveything about users"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Create a new user",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/requestBodies/UserCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success creation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "requestBodies": {
+      "UserCreate": {
+        "description": "A JSON object containing pet information",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "User": {
+        "description": "User definition",
+        "type": "object",
+        "properties": [
+          {
+            "email": null,
+            "type": "string"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -89,7 +89,7 @@ services:
       - invoicer-rabbitmq
 
   invoicer-swagger-editor:
-    image: swaggerapi/swagger-editor
+    image: swaggerapi/swagger-editor:v3.6.20
     container_name: invoicer-swagger-editor
     ports:
       - 8006:8080
