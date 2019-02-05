@@ -17,6 +17,49 @@
     }
   ],
   "paths": {
+    "/ping": {
+      "get": {
+        "summary": "Just a ping method",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "warnings": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "meta": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  },
+                  "example": {
+                    "result": {
+                      "message": "pong"
+                    },
+                    "warnings": null,
+                    "errors": null,
+                    "meta": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/users": {
       "post": {
         "summary": "Create a new user",
@@ -100,6 +143,57 @@
                       "last_name": "This value should not be blank."
                     },
                     "meta": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Return a specific user by its ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "ID of user to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/components/schemas/User"
+                    },
+                    "warnings": {
+                      "type": "object",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "errors": {
+                      "type": "object",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "nullable": true,
+                      "example": null
+                    }
                   }
                 }
               }
