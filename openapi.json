@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://dev.ms.rockspoon.com/v1/customer",
+      "url": "http://localhost:8000",
       "description": "Development server"
     }
   ],
@@ -24,13 +24,7 @@
           "users"
         ],
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/requestBodies/UserCreate"
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/UserCreate"
         },
         "responses": {
           "201": {
@@ -38,7 +32,75 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/components/schemas/User"
+                    },
+                    "warnings": {
+                      "type": "object",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "errors": {
+                      "type": "object",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "nullable": true,
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "warnings": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "first_name": {
+                          "type": "string"
+                        },
+                        "last_name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  },
+                  "example": {
+                    "result": null,
+                    "warnings": null,
+                    "errors": {
+                      "email": "This value is not a valid email address.",
+                      "first_name": "This value should not be blank.",
+                      "last_name": "This value should not be blank."
+                    },
+                    "meta": null
+                  }
                 }
               }
             }
@@ -57,9 +119,23 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "john_mcclain@test.com"
+                },
+                "first_name": {
+                  "type": "string",
+                  "example": "John"
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "McClain"
                 }
-              }
+              },
+              "required": [
+                "email",
+                "first_name",
+                "last_name"
+              ]
             }
           }
         }
@@ -69,12 +145,40 @@
       "User": {
         "description": "User definition",
         "type": "object",
-        "properties": [
-          {
-            "email": null,
-            "type": "string"
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "User ID",
+            "example": 1
+          },
+          "full_name": {
+            "type": "string",
+            "description": "User full name",
+            "example": "John McClain"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "example": "john_mcclain@test.com"
+          },
+          "activated": {
+            "type": "string",
+            "description": "The datetime when user activated an account",
+            "format": "date-time",
+            "example": "2019-01-22T10:30:00Z"
+          },
+          "invoices": {
+            "type": "integer",
+            "description": "Number of user invoices",
+            "example": 5
+          },
+          "amount": {
+            "type": "number",
+            "description": "Total amount of all the invoices",
+            "format": "double",
+            "example": 3045
           }
-        ]
+        }
       }
     }
   }
