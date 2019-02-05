@@ -95,11 +95,11 @@ services:
       - 8006:8080
 
   invoicer-swagger-ui:
-    image: swaggerapi/swagger-ui
+    image: swaggerapi/swagger-ui:v3.20.6
     container_name: invoicer-swagger-ui
     volumes:
       - .:/tmp
     environment:
-      - SWAGGER_JSON=/tmp/swagger.json
+      - SWAGGER_JSON=/tmp/openapi.json
     ports:
       - 8007:8080
