@@ -25,6 +25,9 @@ class UserCreateType extends AbstractType
     /** @var string|null $password */
     public $password;
 
+    /** @var array|null  */
+    public $roles;
+
     /**
      * UserCreateType constructor.
      * @param array $fields
@@ -36,5 +39,6 @@ class UserCreateType extends AbstractType
         $this->lastName = $fields['last_name'] ?? null;
         $this->activated = $fields['activated'] ?? null;
         $this->password = $fields['password'] ?? null;
+        $this->roles = $fields['roles'] ?? null;
     }
 }

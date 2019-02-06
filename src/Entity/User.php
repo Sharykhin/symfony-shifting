@@ -222,9 +222,20 @@ class User implements UserInterface
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles(array $roles): self
+    {
+        $this->roles;
+
+        return $this;
     }
 
     /**

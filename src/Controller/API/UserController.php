@@ -4,6 +4,7 @@ namespace App\Controller\API;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Request\Constraint\User\UserCreateConstraint;
 use App\Contract\Service\User\UserRetrieverInterface;
@@ -26,6 +27,7 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/users/{userId}", name="get_user", methods={"GET"}, requirements={"userId"="\d+"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      *
      * @param UserRetrieverInterface $userRetriever
      * @param ResponseInterface $response
@@ -72,6 +74,8 @@ class UserController extends AbstractController
         EventDispatcherInterface $dispatcher
     ): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $userCreateType = new UserCreateType($request->request->all());
 
         /** @var ValidatorBag $validatorBag */

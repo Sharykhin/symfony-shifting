@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use App\Contract\Service\Response\ResponseInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * Class AppExceptionListener

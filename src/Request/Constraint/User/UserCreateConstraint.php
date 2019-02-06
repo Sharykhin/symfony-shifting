@@ -17,26 +17,29 @@ class UserCreateConstraint extends AbstractConstrain
     public function getConstrain(): Assert\Collection
     {
         return new Assert\Collection([
-            'groups' => ['creating', 'updating'],
+            'groups' => ['creating', 'updating', 'registering'],
             'fields' => [
                 'email' => [
-                    new Assert\NotBlank(['groups' => ['creating']]),
-                    new Assert\Email(['groups' => ['creating', 'updating']]),
+                    new Assert\NotBlank(['groups' => ['creating', 'registering']]),
+                    new Assert\Email(['groups' => ['creating', 'registering']]),
                 ],
                 'first_name' => [
-                    new Assert\NotBlank(['groups' => ['creating']]),
-                    new Assert\Type(['groups' => ['creating', 'updating'], 'type' => 'string']),
+                    new Assert\NotBlank(['groups' => ['creating', 'registering']]),
+                    new Assert\Type(['groups' => ['creating', 'registering'], 'type' => 'string']),
                 ],
                 'last_name' => [
-                    new Assert\Type(['groups' => ['creating', 'updating'], 'type' => 'string']),
+                    new Assert\Type(['groups' => ['creating', 'registering'], 'type' => 'string']),
                 ],
                 'password' => [
-                    new Assert\NotBlank(['groups' => ['creating']]),
-                    new Assert\Type(['groups' => ['creating'], 'type' => 'string']),
-                    new Assert\Length(['groups' => ['creating'], 'min' => 8, 'max' => 4096]), //CVE-2013-5750 https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
+                    new Assert\NotBlank(['groups' => ['creating', 'registering']]),
+                    new Assert\Type(['groups' => ['creating', 'registering'], 'type' => 'string']),
+                    new Assert\Length(['groups' => ['creating', 'registering'], 'min' => 8, 'max' => 4096]), //CVE-2013-5750 https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
                 ],
                 'activated' => [
                     new Assert\Type(['groups' => ['updating'], 'type' => 'bool'])
+                ],
+                'roles' => [
+                    new Assert\Type(['groups' => ['updating', 'creating'], 'type' => 'array'])
                 ]
             ],
             'allowMissingFields' => false,

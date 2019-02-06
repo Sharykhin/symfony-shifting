@@ -1,2 +1,6 @@
 User with id %id% was not found: User with id %id% was not found
 User with such email already exists: User with such email already exists
+Authentication Required: Authentication Required
+Access is forbidden: Access is forbidden
+Token in invalid it must have Bearer prefix: Token in invalid it must have Bearer prefix
+Access Denied: Access Denied

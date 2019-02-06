@@ -71,6 +71,9 @@
     "facebook/webdriver": {
         "version": "1.6.0"
     },
+    "firebase/php-jwt": {
+        "version": "v5.0.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -340,6 +343,9 @@
             "version": "4.1",
             "ref": "0cdc982334f45d554957a6167e030482795bf9d7"
         }
+    },
+    "symfony/var-dumper": {
+        "version": "v4.2.3"
     },
     "symfony/var-exporter": {
         "version": "v4.2.2"

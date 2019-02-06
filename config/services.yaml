@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    jwt_secret_key: '%env(JWT_SECRET_KEY)%'
+    jwt_token_exp: '%env(JWT_TOKEN_EXP)%'
 
 services:
     # default configuration for services in *this* file

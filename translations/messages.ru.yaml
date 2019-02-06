@@ -1,2 +1,6 @@
 User with id %id% was not found: Пользователь с идентификатором %id% не найден
 User with such email already exists: Пользователь с таким емейлом уже существует
+Authentication Required: Аутентифицируйтесь пожалуйста
+Access is forbidden: У вас нет прав для этого действия
+Token in invalid it must have Bearer prefix: Токен не валидный, должен содержаться Bearer
+Access Denied: Доступ запрещен

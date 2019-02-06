@@ -3,6 +3,7 @@
 namespace App\Controller\API;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Contract\Service\Invoice\InvoiceRetrieverInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Contract\Service\User\UserRetrieverInterface;
@@ -19,6 +20,7 @@ class UserInvoiceController extends AbstractController
 {
     /**
      * @Route("/users/{userId}/invoices", name="get_user_invoices", methods={"GET"}, requirements={"userId"="\d+"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      *
      * @param Request $request
      * @param ResponseInterface $response
@@ -58,6 +60,5 @@ class UserInvoiceController extends AbstractController
             'count' => sizeof($invoices),
             'total' => $total,
         ]);
-
     }
 }
