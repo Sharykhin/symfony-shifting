@@ -11,6 +11,7 @@ use App\Repository\UserRepository;
 use App\ViewModel\UserViewModel;
 use PHPUnit\Framework\TestCase;
 use App\Entity\User;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserManagerServiceTest
@@ -49,6 +50,7 @@ class UserManagerServiceTest extends TestCase
         $mockUserViewModelFactory = $this->createMock(UserViewModelFactoryInterface::class);
         $mockUserRepository = $this->createMock(UserRepository::class);
         $mockUserViewModel = $this->createMock(UserViewModel::class);
+        $mockPasswordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
 
         $mockEm
             ->expects($this->once())
@@ -72,7 +74,8 @@ class UserManagerServiceTest extends TestCase
             $mockEm,
             $mockUserFactory,
             $mockReportFactory,
-            $mockUserViewModelFactory
+            $mockUserViewModelFactory,
+            $mockPasswordEncoder
         );
 
         $actual = $service->findById($expectedUserId);
@@ -93,6 +96,7 @@ class UserManagerServiceTest extends TestCase
         $mockReportFactory = $this->createMock(ReportFactoryInterface::class);
         $mockUserViewModelFactory = $this->createMock(UserViewModelFactoryInterface::class);
         $mockUserRepository = $this->createMock(UserRepository::class);
+        $mockPasswordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
 
         $mockEm
             ->expects($this->once())
@@ -114,7 +118,8 @@ class UserManagerServiceTest extends TestCase
             $mockEm,
             $mockUserFactory,
             $mockReportFactory,
-            $mockUserViewModelFactory
+            $mockUserViewModelFactory,
+            $mockPasswordEncoder
         );
 
         $actual = $service->findById($expectedUserId);
