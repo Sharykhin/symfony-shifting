@@ -13,6 +13,7 @@ use App\ViewModel\UserViewModel;
 use App\Entity\Report;
 use DateTimeImmutable;
 use App\Entity\User;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserManagerService
@@ -32,24 +33,30 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
     /** @var UserViewModelFactoryInterface $userViewModelFactory */
     protected $userViewModelFactory;
 
+    /** @var UserPasswordEncoderInterface $passwordEncoder */
+    protected $passwordEncoder;
+
     /**
      * UserManagerService constructor.
      * @param EntityManagerInterface $em
      * @param UserFactoryInterface $userFactory
      * @param ReportFactoryInterface $reportFactory
      * @param UserViewModelFactoryInterface $userViewModelFactory
+     * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function __construct(
         EntityManagerInterface $em,
         UserFactoryInterface $userFactory,
         ReportFactoryInterface $reportFactory,
-        UserViewModelFactoryInterface $userViewModelFactory
+        UserViewModelFactoryInterface $userViewModelFactory,
+        UserPasswordEncoderInterface $passwordEncoder
     )
     {
         $this->em = $em;
         $this->userFactory = $userFactory;
         $this->reportFactory = $reportFactory;
         $this->userViewModelFactory = $userViewModelFactory;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -92,6 +99,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $user->setFirstName($type->firstName);
         $user->setLastName($type->lastName);
         $user->setActivated($type->activated);
+        $user->setPassword($this->passwordEncoder->encodePassword($user, $type->password));
 
         $this->em->persist($user);
         /** @var Report $report */

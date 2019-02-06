@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use DateTimeImmutable;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -50,11 +51,22 @@ class User
     private $activated;
 
     /**
+     * @ORM\Column(type="string", length=80)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $roles;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->invoices = new ArrayCollection();
+        $this->roles = ['ROLE_USER'];
     }
 
     /**
@@ -178,5 +190,56 @@ class User
         $this->activated = $activated;
 
         return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     * @return User
+     */
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function eraseCredentials()
+    {
+       return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @return null
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+       return $this->email;
     }
 }

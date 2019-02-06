@@ -38,7 +38,7 @@ class UserController extends AbstractController
         ResponseInterface $response,
         TranslatorInterface $translator,
         int $userId
-    ) : Response
+    ): Response
     {
         /** @var UserViewModel $user */
         $user = $userRetriever->findById($userId);
@@ -70,7 +70,7 @@ class UserController extends AbstractController
         ValidateInterface $validate,
         ResponseInterface $response,
         EventDispatcherInterface $dispatcher
-    ) : Response
+    ): Response
     {
         $userCreateType = new UserCreateType($request->request->all());
 

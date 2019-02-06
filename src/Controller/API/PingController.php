@@ -21,7 +21,7 @@ class PingController extends AbstractController
      */
     public function ping(
         ResponseInterface $response
-    ) : Response
+    ): Response
     {
         return $response->success(['message' => 'pong']);
     }

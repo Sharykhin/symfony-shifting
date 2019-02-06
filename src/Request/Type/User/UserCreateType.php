@@ -10,17 +10,20 @@ use App\Request\Type\AbstractType;
  */
 class UserCreateType extends AbstractType
 {
-    /** @var mixed|null $email */
+    /** @var string|null $email */
     public $email;
 
-    /** @var mixed|null $fistName */
+    /** @var string|null $fistName */
     public $firstName;
 
-    /** @var mixed|null $lastName */
+    /** @var string|null $lastName */
     public $lastName;
 
     /** @var mixed|null $activated */
     public $activated;
+
+    /** @var string|null $password */
+    public $password;
 
     /**
      * UserCreateType constructor.
@@ -32,5 +35,6 @@ class UserCreateType extends AbstractType
         $this->firstName = $fields['first_name'] ?? null;
         $this->lastName = $fields['last_name'] ?? null;
         $this->activated = $fields['activated'] ?? null;
+        $this->password = $fields['password'] ?? null;
     }
 }

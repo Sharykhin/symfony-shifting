@@ -21,15 +21,19 @@ class UserCreateConstraint extends AbstractConstrain
             'fields' => [
                 'email' => [
                     new Assert\NotBlank(['groups' => ['creating']]),
-                    new Assert\Email(['groups' => ['creating']]),
+                    new Assert\Email(['groups' => ['creating', 'updating']]),
                 ],
                 'first_name' => [
                     new Assert\NotBlank(['groups' => ['creating']]),
-                    new Assert\Type(['groups' => ['creating'], 'type' => 'string']),
+                    new Assert\Type(['groups' => ['creating', 'updating'], 'type' => 'string']),
                 ],
                 'last_name' => [
+                    new Assert\Type(['groups' => ['creating', 'updating'], 'type' => 'string']),
+                ],
+                'password' => [
                     new Assert\NotBlank(['groups' => ['creating']]),
                     new Assert\Type(['groups' => ['creating'], 'type' => 'string']),
+                    new Assert\Length(['groups' => ['creating'], 'min' => 8, 'max' => 4096]), //CVE-2013-5750 https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
                 ],
                 'activated' => [
                     new Assert\Type(['groups' => ['updating'], 'type' => 'bool'])
