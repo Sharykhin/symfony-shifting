@@ -46,7 +46,7 @@ class User implements UserInterface
     private $invoices;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $activated;
 
@@ -224,7 +224,9 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        return $this->roles;
+        $this->roles[] = 'ROLE_USER';
+
+        return array_unique($this->roles);
     }
 
     /**
@@ -233,7 +235,7 @@ class User implements UserInterface
      */
     public function setRoles(array $roles): self
     {
-        $this->roles;
+        $this->roles = $roles;
 
         return $this;
     }

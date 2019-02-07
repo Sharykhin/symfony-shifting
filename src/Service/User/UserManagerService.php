@@ -100,6 +100,9 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
         $user->setLastName($type->lastName);
         $user->setActivated($type->activated);
         $user->setPassword($this->passwordEncoder->encodePassword($user, $type->password));
+        if (!is_null($type->roles)) {
+            $user->setRoles($type->roles);
+        }
 
         $this->em->persist($user);
         /** @var Report $report */

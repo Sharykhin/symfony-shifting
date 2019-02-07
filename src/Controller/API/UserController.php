@@ -2,11 +2,11 @@
 
 namespace App\Controller\API;
 
+use App\Request\Constraint\User\CreateConstraint;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use App\Request\Constraint\User\UserCreateConstraint;
 use App\Contract\Service\User\UserRetrieverInterface;
 use App\Contract\Service\Response\ResponseInterface;
 use App\Contract\Service\Validate\ValidateInterface;
@@ -54,6 +54,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users", name="post_users", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param Request $request
      * @param UserCreateInterface $userCreate
@@ -74,14 +75,12 @@ class UserController extends AbstractController
         EventDispatcherInterface $dispatcher
     ): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         $userCreateType = new UserCreateType($request->request->all());
 
         /** @var ValidatorBag $validatorBag */
         $validatorBag = $validate->validate(
             $userCreateType->toArray(),
-            UserCreateConstraint::class,
+            CreateConstraint::class,
             ['creating']
         );
 

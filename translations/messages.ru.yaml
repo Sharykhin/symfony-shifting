@@ -4,3 +4,4 @@ Authentication Required: Аутентифицируйтесь пожалуйст
 Access is forbidden: У вас нет прав для этого действия
 Token in invalid it must have Bearer prefix: Токен не валидный, должен содержаться Bearer
 Access Denied: Доступ запрещен
+Bad credentials or user is not activated: Неверные данные для авторизации или пользовтаель не активирован
