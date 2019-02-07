@@ -2,9 +2,6 @@
 
 namespace App\Controller\API;
 
-use App\Contract\Service\Auth\AuthInterface;
-use App\Request\Type\Auth\LoginType;
-use App\ViewModel\UserViewModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -17,8 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Contract\Service\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use App\Contract\Service\Auth\AuthInterface;
 use App\Request\Type\User\UserCreateType;
+use App\Request\Type\Auth\LoginType;
 use App\ValueObject\ValidatorBag;
+use App\ViewModel\UserViewModel;
 use App\Event\UserCreatedEvent;
 
 /**
@@ -86,6 +86,7 @@ class AuthController extends AbstractController
      * @param AuthInterface $auth
      * @param ValidateInterface $validate
      * @param ResponseInterface $response
+     * @param TranslatorInterface $translator
      * @param TokenInterface $tokenManager
      * @return Response
      */

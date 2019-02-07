@@ -3,12 +3,12 @@
 namespace App\Command;
 
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use App\Request\Constraint\User\UserCreateConstraint;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Contract\Service\User\UserRetrieverInterface;
 use App\Contract\Service\Validate\ValidateInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use App\Contract\Service\User\UserCreateInterface;
+use App\Request\Constraint\User\CreateConstraint;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Command\Command;
 use App\Request\Type\User\UserCreateType;
@@ -21,7 +21,7 @@ use DateTimeImmutable;
  */
 class CreateUserCommand extends Command
 {
-    const ROLES = ['ROLE_USER', 'ROLE_ADMIN'];
+    const ROLES = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_ACCOUNTANT'];
 
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'app:create-user';
@@ -97,7 +97,7 @@ class CreateUserCommand extends Command
         /** @var ValidatorBag $validatorBag */
         $validatorBag = $this->validate->validate(
             $userCreateType->toArray(),
-            UserCreateConstraint::class,
+            CreateConstraint::class,
             ['creating']
         );
 
@@ -194,7 +194,7 @@ class CreateUserCommand extends Command
     {
         $helper = $this->getHelper('question');
 
-        $question = new Question('<question>Please enter the roles (ROLE_USER, ROLE_ADMIN):</question> ', 'ROLE_USER');
+        $question = new Question('<question>Please enter the roles (ROLE_USER, ROLE_ADMIN, ROLE_ACCOUNTANT):</question> ', 'ROLE_USER');
         $roles = trim($helper->ask($input, $output, $question));
         $roles = explode(',', $roles);
 

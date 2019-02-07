@@ -45,6 +45,8 @@ class UserInvoiceController extends AbstractController
             return $response->notFound($translator->trans('User with id %id% was not found', ['%id%' => $userId]));
         }
 
+        $this->denyAccessUnlessGranted('view-invoices', $user);
+
         $limit = (int) $request->query->get('limit', 10);
         $offset = (int) $request->query->get('offset', 0);
         $order = json_decode($request->query->get('order'), true);

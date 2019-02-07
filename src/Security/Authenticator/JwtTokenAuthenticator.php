@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Authenticator;
 
 use App\Contract\Service\Token\TokenInterface as InvoicerTokenInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
@@ -13,6 +14,7 @@ use App\Contract\Service\Response\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use App\Entity\User;
 
 /**
@@ -34,24 +36,36 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
     /** @var TranslatorInterface $translator */
     protected $translator;
 
+    /** @var LoggerInterface $logger */
+    protected $logger;
+
+    /** @var ContainerInterface $container */
+    protected $container;
+
     /**
      * JwtTokenAuthenticator constructor.
      * @param EntityManagerInterface $em
      * @param InvoicerTokenInterface $tokenManager
      * @param ResponseInterface $response
      * @param TranslatorInterface $translator
+     * @param LoggerInterface $logger
+     * @param ContainerInterface $container
      */
     public function __construct(
         EntityManagerInterface $em,
         InvoicerTokenInterface $tokenManager,
         ResponseInterface $response,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        LoggerInterface $logger,
+        ContainerInterface $container
     )
     {
         $this->em = $em;
         $this->tokenManager = $tokenManager;
         $this->response = $response;
         $this->translator = $translator;
+        $this->logger = $logger;
+        $this->container = $container;
     }
 
     /**
@@ -129,7 +143,19 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
-        return $this->response->error($this->translator->trans($exception->getMessage()), Response::HTTP_FORBIDDEN);
+        $environment = $this->container->getParameter('kernel.environment');
+
+        if ($environment === 'dev' && $request->query->get('_mode') === 'prod') {
+            $this->logger->error($exception->getMessage(), $exception->getTrace());
+        } else if ($environment === 'dev') {
+            throw $exception;
+        }
+
+        return $this->response->error(
+            $this->translator->trans('Access is denied or token is invalid'),
+            Response::HTTP_FORBIDDEN
+        );
+
     }
 
     /**
@@ -139,6 +165,14 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null): Response
     {
+        $environment = $this->container->getParameter('kernel.environment');
+
+        if ($environment === 'dev' && $request->query->get('_mode') === 'prod') {
+            $this->logger->error($authException->getMessage(), $authException->getTrace());
+        } else if ($environment === 'dev') {
+            throw $authException;
+        }
+
         return $this->response->error($this->translator->trans('Authentication Required'), Response::HTTP_UNAUTHORIZED);
     }
 

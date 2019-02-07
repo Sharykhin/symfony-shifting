@@ -3,9 +3,13 @@
 namespace App\Controller\API;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Request\Constraint\Invoice\InvoiceCreateConstraint;
 use App\Contract\Service\Invoice\InvoiceRetrieverInterface;
 use App\Contract\Service\Invoice\InvoiceCreatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Contract\Service\User\UserRetrieverInterface;
 use App\Contract\Service\Validate\ValidateInterface;
 use App\Contract\Service\Response\ResponseInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\ViewModel\InvoiceViewModel;
 use App\ValueObject\ValidatorBag;
+use App\ViewModel\UserViewModel;
 
 /**
  * Class InvoiceController
@@ -24,6 +29,7 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route("/invoices", name="get_invoices", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ACCOUNTANT')")
      *
      * @param Request $request
      * @param ResponseInterface $response
@@ -55,17 +61,22 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route("/invoices", name="post_invoices", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      *
      * @param Request $request
      * @param InvoiceCreatorInterface $invoiceCreator
+     * @param UserRetrieverInterface $userRetriever
      * @param ValidateInterface $validate
+     * @param TranslatorInterface $translator
      * @param ResponseInterface $response
      * @return Response
      */
     public function store(
         Request $request,
         InvoiceCreatorInterface $invoiceCreator,
+        UserRetrieverInterface $userRetriever,
         ValidateInterface $validate,
+        TranslatorInterface $translator,
         ResponseInterface $response
     ): Response
     {
@@ -80,6 +91,17 @@ class InvoiceController extends AbstractController
         if (!$validatorBag->isValid()) {
             return $response->badRequest($validatorBag->getErrors());
         }
+
+        /** @var UserViewModel $user */
+        $user = $userRetriever->findById($type->userId);
+
+        if (is_null($user)) {
+            return $response->badRequest([
+                'user_id' => $translator->trans('User with id %id% was not found', ['%id%' => $type->userId])
+            ]);
+        }
+
+        $this->denyAccessUnlessGranted('create-invoice', $user);
 
         /** @var InvoiceViewModel $invoice */
         $invoice = $invoiceCreator->create($type);

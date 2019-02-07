@@ -2,7 +2,6 @@
 
 namespace App\Controller\API;
 
-use App\Request\Constraint\User\CreateConstraint;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -11,6 +10,7 @@ use App\Contract\Service\User\UserRetrieverInterface;
 use App\Contract\Service\Response\ResponseInterface;
 use App\Contract\Service\Validate\ValidateInterface;
 use App\Contract\Service\User\UserCreateInterface;
+use App\Request\Constraint\User\CreateConstraint;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;

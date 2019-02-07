@@ -5,3 +5,4 @@ Access is forbidden: Access is forbidden
 Token in invalid it must have Bearer prefix: Token in invalid it must have Bearer prefix
 Access Denied: Access Denied
 Bad credentials or user is not activated: Bad credentials or user is not activated
+Access is denied or token is invalid: Access is denied or token is invalid
