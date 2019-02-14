@@ -58,7 +58,7 @@ class InvoiceViewModel
     /**
      * @return int
      */
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -66,7 +66,7 @@ class InvoiceViewModel
     /**
      * @return float
      */
-    public function getAmount() : float
+    public function getAmount(): float
     {
         return $this->amount;
     }
@@ -74,7 +74,7 @@ class InvoiceViewModel
     /**
      * @return string|null
      */
-    public function getComment() : ?string
+    public function getComment(): ?string
     {
         return $this->comment;
     }
@@ -82,7 +82,7 @@ class InvoiceViewModel
     /**
      * @return DateTimeImmutable
      */
-    public function getCreatedAt() : DateTimeImmutable
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }

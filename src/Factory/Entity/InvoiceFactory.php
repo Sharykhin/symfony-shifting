@@ -14,7 +14,7 @@ class InvoiceFactory implements InvoiceFactoryInterface
     /**
      * @return Invoice
      */
-    public function create() : Invoice
+    public function create(): Invoice
     {
         return new Invoice();
     }

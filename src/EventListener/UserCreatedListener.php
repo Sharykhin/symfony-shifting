@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Class UserCreatedListener
  * @package App\EventListener
+ * // TODO: such kind of events that are related to entities is better to move to a separate directory
  */
 class UserCreatedListener
 {
@@ -43,7 +44,7 @@ class UserCreatedListener
     /**
      * @param UserCreatedEvent $event
      */
-    public function onUserCreated(UserCreatedEvent $event) : void
+    public function onUserCreated(UserCreatedEvent $event): void
     {
         $this->logger->info(sprintf(
             'User %s has been created with ID: %d',

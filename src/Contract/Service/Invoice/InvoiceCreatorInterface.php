@@ -15,5 +15,5 @@ interface InvoiceCreatorInterface
      * @param InvoiceCreateType $type
      * @return InvoiceViewModel
      */
-    public function create(InvoiceCreateType $type) : InvoiceViewModel;
+    public function create(InvoiceCreateType $type): InvoiceViewModel;
 }

@@ -15,7 +15,7 @@ class ValidatorBagFactory implements ValidatorBagFactoryInterface
      * @param array $errors
      * @return ValidatorBag
      */
-    public function create(array $errors = []) : ValidatorBag
+    public function create(array $errors = []): ValidatorBag
     {
         return new ValidatorBag($errors);
     }

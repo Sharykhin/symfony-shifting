@@ -42,7 +42,7 @@ class SymfonyValidateService implements ValidateInterface
      * @param array|null $groups
      * @return ValidatorBag
      */
-    public function validate($values, $constraintClass, array $groups = null) : ValidatorBag
+    public function validate($values, $constraintClass, array $groups = null): ValidatorBag
     {
         /** @var ConstraintViolationListInterface $violations */
         $violations = $this->validator->validate(
@@ -67,7 +67,7 @@ class SymfonyValidateService implements ValidateInterface
      * @param string $constraintClass
      * @return AbstractConstrain
      */
-    protected function createConstraintClass(string $constraintClass) : AbstractConstrain
+    protected function createConstraintClass(string $constraintClass): AbstractConstrain
     {
         return new $constraintClass();
     }

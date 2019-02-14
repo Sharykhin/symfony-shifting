@@ -49,7 +49,7 @@ class ExceptionListener
     /**
      * @param GetResponseForExceptionEvent $event
      */
-    public function onKernelException(GetResponseForExceptionEvent $event) : void
+    public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $environment = $this->container->getParameter('kernel.environment');
         $exception = $event->getException();

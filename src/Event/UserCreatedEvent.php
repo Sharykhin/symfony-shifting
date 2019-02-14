@@ -28,7 +28,7 @@ class UserCreatedEvent extends Event
     /**
      * @return UserViewModel
      */
-    public function getUser() : UserViewModel
+    public function getUser(): UserViewModel
     {
         return $this->user;
     }

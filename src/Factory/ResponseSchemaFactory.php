@@ -14,7 +14,7 @@ class ResponseSchemaFactory implements ResponseSchemaFactoryInterface
     /**
      * @return ResponseSchema
      */
-    public function create() : ResponseSchema
+    public function create(): ResponseSchema
     {
         return new ResponseSchema();
     }

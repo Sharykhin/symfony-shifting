@@ -41,7 +41,7 @@ class JsonResponseService implements ResponseInterface
      * @param array $groups
      * @return Response
      */
-    public function success($data, array $warnings = null, array $meta = null, array $groups = ['public']) : Response
+    public function success($data, array $warnings = null, array $meta = null, array $groups = ['public']): Response
     {
         /** @var ResponseSchema $schema */
         $schema = $this->responseSchemaFactory->create();
@@ -140,7 +140,7 @@ class JsonResponseService implements ResponseInterface
      * @param int $statusCode
      * @return Response
      */
-    protected function sendResponse(ResponseSchema $schema, array $groups, int $statusCode) : Response
+    protected function sendResponse(ResponseSchema $schema, array $groups, int $statusCode): Response
     {
         $response = $schema->toArray();
 

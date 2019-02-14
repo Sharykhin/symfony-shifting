@@ -27,7 +27,7 @@ class AnnotationSerializerFactory implements SerializerFactoryInterface
      * @param array $normalizers
      * @return SerializerInterface
      */
-    public function create(array $encoders = [], array $normalizers = []) : SerializerInterface
+    public function create(array $encoders = [], array $normalizers = []): SerializerInterface
     {
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $serializeEncoders = [];

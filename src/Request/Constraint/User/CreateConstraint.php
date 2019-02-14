@@ -8,6 +8,7 @@ use App\Request\Constraint\AbstractConstrain;
 /**
  * Class CreateConstraint
  * @package App\Request\Constraint\User
+ * // TODO: Semantically this name is not really good cause we use it for updating, authentication
  */
 class CreateConstraint extends AbstractConstrain
 {

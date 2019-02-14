@@ -13,7 +13,7 @@ class SetLocaleListener
     /**
      * @param GetResponseEvent $event
      */
-    public function onKernelRequest(GetResponseEvent $event) : void
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
 

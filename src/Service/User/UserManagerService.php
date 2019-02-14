@@ -2,6 +2,7 @@
 
 namespace App\Service\User;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Contract\Factory\ViewModel\UserViewModelFactoryInterface;
 use App\Contract\Factory\Entity\ReportFactoryInterface;
 use App\Contract\Factory\Entity\UserFactoryInterface;
@@ -13,7 +14,6 @@ use App\ViewModel\UserViewModel;
 use App\Entity\Report;
 use DateTimeImmutable;
 use App\Entity\User;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserManagerService
@@ -91,7 +91,7 @@ class UserManagerService implements UserRetrieverInterface, UserCreateInterface
      * @param UserCreateType $type
      * @return UserViewModel
      */
-    public function create(UserCreateType $type) : UserViewModel
+    public function create(UserCreateType $type): UserViewModel
     {
         /** @var User $user */
         $user = $this->userFactory->create();

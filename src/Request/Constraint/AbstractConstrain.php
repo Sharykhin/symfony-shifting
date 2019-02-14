@@ -13,5 +13,5 @@ abstract class AbstractConstrain
     /**
      * @return Assert\Collection
      */
-    abstract public function getConstrain() : Assert\Collection;
+    abstract public function getConstrain(): Assert\Collection;
 }

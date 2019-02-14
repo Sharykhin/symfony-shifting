@@ -11,7 +11,9 @@ use App\Entity\Invoice;
 interface InvoiceFactoryInterface
 {
     /**
+     * Creates a new Invoice entity
+     *
      * @return Invoice
      */
-    public function create() : Invoice;
+    public function create(): Invoice;
 }

@@ -3,11 +3,11 @@
 namespace App\Security\Authenticator;
 
 use App\Contract\Service\Token\TokenInterface as InvoicerTokenInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Contract\Service\Response\ResponseInterface;
@@ -81,7 +81,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      * @param Request $request
      * @return array
      */
-    public function getCredentials(Request $request)
+    public function getCredentials(Request $request): array
     {
         $authHeader = $request->headers->get('Authorization');
 

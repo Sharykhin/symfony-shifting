@@ -15,7 +15,7 @@ class UserViewModelFactory implements UserViewModelFactoryInterface
      * @param array $data
      * @return UserViewModel
      */
-    public function create(array $data) : UserViewModel
+    public function create(array $data): UserViewModel
     {
         $data['full_name'] = trim($data['firstName'] . ' ' . $data['lastName'] ?? '');
 

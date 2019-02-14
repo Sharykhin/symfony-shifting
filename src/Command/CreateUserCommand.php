@@ -54,7 +54,11 @@ class CreateUserCommand extends Command
         parent::__construct();
     }
 
-
+    /**
+     * Method describes command and its arguments
+     *
+     * @return void
+     */
     protected function configure(): void
     {
         $this
@@ -194,7 +198,10 @@ class CreateUserCommand extends Command
     {
         $helper = $this->getHelper('question');
 
-        $question = new Question('<question>Please enter the roles (ROLE_USER, ROLE_ADMIN, ROLE_ACCOUNTANT):</question> ', 'ROLE_USER');
+        $question = new Question(
+            '<question>Please enter the roles (ROLE_USER, ROLE_ADMIN, ROLE_ACCOUNTANT):</question> ',
+            'ROLE_USER'
+        );
         $roles = trim($helper->ask($input, $output, $question));
         $roles = explode(',', $roles);
 

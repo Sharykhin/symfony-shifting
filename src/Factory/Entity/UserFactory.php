@@ -14,7 +14,7 @@ class UserFactory implements UserFactoryInterface
     /**
      * @return User
      */
-    public function create() : User
+    public function create(): User
     {
         return new User();
     }

@@ -49,7 +49,7 @@ class EmailMessage
     /**
      * @return string
      */
-    public function getSubject() : string
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -57,7 +57,7 @@ class EmailMessage
     /**
      * @return string
      */
-    public function getBody() : string
+    public function getBody(): string
     {
         return $this->body;
     }
@@ -65,7 +65,7 @@ class EmailMessage
     /**
      * @return string
      */
-    public function getTo() : string
+    public function getTo(): string
     {
         return $this->to;
     }
@@ -73,7 +73,7 @@ class EmailMessage
     /**
      * @return null|string
      */
-    public function getName() : ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -81,7 +81,7 @@ class EmailMessage
     /**
      * @return string
      */
-    public function getContentType() : string
+    public function getContentType(): string
     {
         return $this->contentType;
     }

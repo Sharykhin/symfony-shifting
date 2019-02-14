@@ -23,7 +23,7 @@ class ValidatorBag
     /**
      * @return bool
      */
-    public function isValid() : bool
+    public function isValid(): bool
     {
         return 0 === sizeof($this->errors);
     }
@@ -31,7 +31,7 @@ class ValidatorBag
     /**
      * @return array
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }

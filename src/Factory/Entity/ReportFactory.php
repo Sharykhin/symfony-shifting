@@ -14,7 +14,7 @@ class ReportFactory implements ReportFactoryInterface
     /**
      * @return Report
      */
-    public function create() : Report
+    public function create(): Report
     {
         return new Report();
     }

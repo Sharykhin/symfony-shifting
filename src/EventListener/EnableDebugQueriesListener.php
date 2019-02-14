@@ -34,7 +34,7 @@ class EnableDebugQueriesListener
     /**
      * @param GetResponseEvent $event
      */
-    public function onKernelRequest(GetResponseEvent $event) : void
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         $this->container->get('doctrine')->getConnection()
             ->getConfiguration()

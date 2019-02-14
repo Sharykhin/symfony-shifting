@@ -13,7 +13,7 @@ abstract class AbstractType implements ArrayableInterface
     /**
      * @return array
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return $this->camelCaseToSnakeCase((array) $this);
     }
@@ -22,7 +22,7 @@ abstract class AbstractType implements ArrayableInterface
      * @param array $items
      * @return array
      */
-    protected function camelCaseToSnakeCase(array $items) : array
+    protected function camelCaseToSnakeCase(array $items): array
     {
         $convertedItems = [];
         foreach ($items as $key => $value) {

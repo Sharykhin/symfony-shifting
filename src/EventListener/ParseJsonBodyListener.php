@@ -17,7 +17,7 @@ class ParseJsonBodyListener
     /**
      * @param FilterControllerEvent $event
      */
-    public function onKernelController(FilterControllerEvent $event) : void
+    public function onKernelController(FilterControllerEvent $event): void
     {
         $request = $event->getRequest();
         if ($request->getContentType() !== 'json' || !$request->getContent()) {

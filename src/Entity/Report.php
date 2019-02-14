@@ -34,16 +34,26 @@ class Report
      */
     private $date;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return Report
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -51,11 +61,18 @@ class Report
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getAmount() : ?float
     {
         return $this->amount;
     }
 
+    /**
+     * @param float $amount
+     * @return Report
+     */
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
@@ -63,11 +80,18 @@ class Report
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getDate(): ?DateTimeImmutable
     {
         return $this->date;
     }
 
+    /**
+     * @param DateTimeImmutable $date
+     * @return Report
+     */
     public function setDate(DateTimeImmutable $date): self
     {
         $this->date = $date;

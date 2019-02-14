@@ -15,5 +15,5 @@ interface UserCreateInterface
      * @param UserCreateType $userCreateType
      * @return UserViewModel
      */
-    public function create(UserCreateType $userCreateType) : UserViewModel;
+    public function create(UserCreateType $userCreateType): UserViewModel;
 }

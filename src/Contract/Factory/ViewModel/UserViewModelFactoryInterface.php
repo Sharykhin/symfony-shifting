@@ -14,5 +14,5 @@ interface UserViewModelFactoryInterface
      * @param array $data
      * @return UserViewModel
      */
-    public function create(array $data) : UserViewModel;
+    public function create(array $data): UserViewModel;
 }

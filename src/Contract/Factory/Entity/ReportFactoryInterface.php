@@ -11,7 +11,9 @@ use App\Entity\Report;
 interface ReportFactoryInterface
 {
     /**
+     * Creates a new Report entity
+     *
      * @return Report
      */
-    public function create() : Report;
+    public function create(): Report;
 }

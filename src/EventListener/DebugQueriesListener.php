@@ -26,7 +26,7 @@ class DebugQueriesListener
     /**
      * @param FilterResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event) : void
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         $response = $event->getResponse();
 

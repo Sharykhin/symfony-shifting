@@ -16,5 +16,5 @@ interface ValidateInterface
      * @param array|null $groups
      * @return ValidatorBag
      */
-    public function validate($values, $constraintClass, array $groups = null) : ValidatorBag;
+    public function validate($values, $constraintClass, array $groups = null): ValidatorBag;
 }

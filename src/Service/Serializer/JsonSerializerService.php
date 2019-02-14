@@ -44,7 +44,7 @@ class JsonSerializerService implements SerializerInterface
      * @param array $attributes
      * @return array
      */
-    public function normalize($object, array $attributes = []) : array
+    public function normalize($object, array $attributes = []): array
     {
         return $this->serializer->normalize($object, 'array', ['attributes' => $attributes]);
     }

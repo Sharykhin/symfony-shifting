@@ -14,7 +14,7 @@ interface UserRetrieverInterface
      * @param int $userId
      * @return UserViewModel|null
      */
-    public function findById(int $userId) : ?UserViewModel;
+    public function findById(int $userId): ?UserViewModel;
 
     /**
      * @param string $email

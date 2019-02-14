@@ -13,5 +13,5 @@ interface ResponseSchemaFactoryInterface
     /**
      * @return ResponseSchema
      */
-    public function create() : ResponseSchema;
+    public function create(): ResponseSchema;
 }

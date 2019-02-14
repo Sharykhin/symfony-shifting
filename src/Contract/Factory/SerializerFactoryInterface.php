@@ -15,5 +15,5 @@ interface SerializerFactoryInterface
      * @param array $normalizers
      * @return SerializerInterface
      */
-    public function create(array $encoders = [], array $normalizers = []) : SerializerInterface;
+    public function create(array $encoders = [], array $normalizers = []): SerializerInterface;
 }

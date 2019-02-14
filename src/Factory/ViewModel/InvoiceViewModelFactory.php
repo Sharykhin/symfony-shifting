@@ -15,7 +15,7 @@ class InvoiceViewModelFactory implements InvoiceViewModelFactoryInterface
      * @param array $data
      * @return InvoiceViewModel
      */
-    public function create(array $data) : InvoiceViewModel
+    public function create(array $data): InvoiceViewModel
     {
         return new InvoiceViewModel($data);
     }

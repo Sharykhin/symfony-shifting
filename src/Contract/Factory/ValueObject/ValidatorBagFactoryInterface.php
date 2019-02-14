@@ -11,8 +11,10 @@ use App\ValueObject\ValidatorBag;
 interface ValidatorBagFactoryInterface
 {
     /**
+     * Creates a new instance of validation error bag
+     *
      * @param array $errors
      * @return ValidatorBag
      */
-    public function create(array $errors) : ValidatorBag;
+    public function create(array $errors): ValidatorBag;
 }

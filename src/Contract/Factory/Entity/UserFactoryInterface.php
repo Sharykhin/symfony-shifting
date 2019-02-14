@@ -11,7 +11,9 @@ use App\Entity\User;
 interface UserFactoryInterface
 {
     /**
+     * Creates a new User entity
+     *
      * @return User
      */
-    public function create() : User;
+    public function create(): User;
 }

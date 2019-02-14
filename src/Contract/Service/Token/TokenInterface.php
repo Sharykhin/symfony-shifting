@@ -23,5 +23,5 @@ interface TokenInterface
      * @param null $head
      * @return string
      */
-    public function encode(array $payload = [], string $alg, $keyId = null, $head = null) : string;
+    public function encode(array $payload = [], string $alg, $keyId = null, $head = null): string;
 }

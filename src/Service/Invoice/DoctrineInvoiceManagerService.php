@@ -105,7 +105,7 @@ class DoctrineInvoiceManagerService implements InvoiceCreatorInterface, InvoiceR
         $user = $this->em->getRepository(User::class)->find($type->userId);
         try {
             $this->em->beginTransaction();
-            // TODO: think about some kind of factory to be able to test it
+            // TODO: think about some kind of factory to be able to test DateTimeImmutable
             $date = new DateTimeImmutable('now');
             $invoice = $this->invoiceFactory->create();
             $invoice->setAmount($type->amount);
