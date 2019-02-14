@@ -27,9 +27,9 @@ docker-compose up
 ```
 
 When it run, it will automatically run installing composer dependencies, so for 
-the first time it may time a couple of minutes.
+the first time it may take a couple of minutes.
 
-4. Open browser on [http://localhost:8000/ping](http://localhost:8000/ping) to check whether
+4. Open a browser on [http://localhost:8000/ping](http://localhost:8000/ping) to check whether
 everything works as expected.
 
 #### PHPUnit Code Coverage
